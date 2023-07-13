@@ -28,7 +28,6 @@ if ($debug){
 
 
 
-
 // Obtener la carta seleccionada
 if (isset($_GET['carta'])) {
     $cartas = $_SESSION['cartas'];
@@ -64,40 +63,54 @@ if (isset($_GET['ocultar'])){
 </head>
 <body>
     <h1>Juego de Memoria</h1>
-    <p>Intentos: <?php echo $_SESSION['intentos']; ?></p>
-    <p>Aciertos: <?php echo $_SESSION['aciertos']; ?></p>
-    <?php
-    if ($debug){
-        echo "<p>intento_actual: ". arrayToString($_SESSION['intento_actual'])."</p>";
-        echo "<p>encontradas: ". arrayToString($_SESSION['encontradas'])."</p>";
-    }
-    // Verificar si el juego ha terminado
-    if ($_SESSION['aciertos'] == count($_SESSION['cartas'])/2) {
-        echo "<p>";
-        echo "¡Felicidades! Has ganado el juego en ".$_SESSION['intentos']." intentos.<br/>";
-        echo '<a href="?restart=true">Jugar de nuevo</a>';
-        echo "</p>";
-    }
-    $cartas = $_SESSION['cartas'];
-    echo '<div class="board">';
-    // echo 'tablero';
-    for ($i = 0; $i < count($cartas); $i++) {
-        if (in_array($i, $_SESSION['intento_actual']) ) {
-            echo '<div class="carta">'.$cartas[$i].'</div>';
-        }
-        elseif (in_array($i, $_SESSION['encontradas'])) {
-            echo '<div class="carta encontrada">'.$cartas[$i].'</div>';
-        } else {
-            echo '<a href="?carta='.$i.'"><div class="carta">?</div></a>';
-        }
-    }
-    echo '</div>';
-    if (count($_SESSION['intento_actual'])==2){
-        // Agregar el enlace para ocultar las cartas
-        echo '<p><a href="?ocultar=true">Ocultar cartas</a></p>';
-    }
-    // Agregar el boton o enlace para reiniciar el juego en cualquier momento
-    echo '<p style="text-align: right;"><small><a href="?restart=true">Reiniciar juego</a></small></p>';
-    ?>
+
+    <div class='hbox'>
+
+        <div>
+             <?php
+            $cartas = $_SESSION['cartas'];
+            echo '<div class="board">';
+            // echo 'tablero';
+            for ($i = 0; $i < count($cartas); $i++) {
+                if (in_array($i, $_SESSION['intento_actual']) ) {
+                    echo '<div class="carta">'.$cartas[$i].'</div>';
+                }
+                elseif (in_array($i, $_SESSION['encontradas'])) {
+                    echo '<div class="carta encontrada">'.$cartas[$i].'</div>';
+                } else {
+                    echo '<a href="?carta='.$i.'"><div class="carta">?</div></a>';
+                }
+            }
+            echo '</div>';
+
+            // Agregar el boton o enlace para reiniciar el juego en cualquier momento
+            echo '<p style="text-align: right;"><small><a href="?restart=true">Reiniciar juego</a></small></p>';
+            ?>
+        </div>
+
+        <div class="info">
+            <p>Intentos: <?php echo $_SESSION['intentos']; ?></p>
+            <p>Aciertos: <?php echo $_SESSION['aciertos']; ?></p>
+            <?php
+            if ($debug){
+                echo "<p>intento_actual: ". arrayToString($_SESSION['intento_actual'])."</p>";
+                echo "<p>encontradas: ". arrayToString($_SESSION['encontradas'])."</p>";
+            }
+            if (count($_SESSION['intento_actual'])==2){
+                // Agregar el enlace para ocultar las cartas
+                echo '<p><a href="?ocultar=true">Ocultar cartas</a></p>';
+            }
+            // Verificar si el juego ha terminado
+            if ($_SESSION['aciertos'] == count($_SESSION['cartas'])/2) {
+                echo "<p>";
+                echo "¡Felicidades! Has ganado el juego en ".$_SESSION['intentos']." intentos.<br/>";
+                echo '<a href="?restart=true">Jugar de nuevo</a>';
+                echo "</p>";
+            }
+            ?>
+        </div>
+
+    </div>
+
 </body>
 </html>

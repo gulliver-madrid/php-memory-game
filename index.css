@@ -6,6 +6,10 @@ a {
     text-decoration: none;
 }
 
+.hbox {
+    display: flex;
+}
+
 .board {
     background-color: orange;
     display: flex;
@@ -27,4 +31,8 @@ a {
 
 .encontrada {
     background-color: green;
+}
+
+.info {
+    margin-left: 60px;
 }
