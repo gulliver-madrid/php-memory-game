@@ -25,9 +25,8 @@ if ($debug){
     echo "<p>Cartas barajadas: ".arrayToString($_SESSION['cartas']).'</p>';
 }
 
-// Obtener la carta seleccionada
-if (isset($_GET['carta'])) {
-    $cartas = $_SESSION['cartas'];
+function registrarCarta(array $cartas)
+{
     if (count($_SESSION['intento_actual'])<2){
         $carta = $_GET['carta'];
         if (!in_array($carta, $_SESSION['intento_actual'])) {
@@ -44,6 +43,12 @@ if (isset($_GET['carta'])) {
             }
         }
     }
+}
+
+// Obtener la carta seleccionada
+if (isset($_GET['carta'])) {
+    $cartas = $_SESSION['cartas'];
+    registrarCarta($cartas);
 }
 
 if (isset($_GET['ocultar'])){
