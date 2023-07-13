@@ -1,5 +1,6 @@
 <?php
     require_once "helpers.php";
+
     $debug = false;
 
     // Iniciar el juego
@@ -61,7 +62,7 @@
 
     if (isset($_GET['ocultar'])){
         $_SESSION['intento_actual'] = array();
-    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -76,23 +77,20 @@
     <div class='hbox'>
 
         <div>
-             <?php
-            $cartas = $_SESSION['cartas'];
-            echo '<div class="board">';
-            // echo 'tablero';
-            for ($i = 0; $i < count($cartas); $i++) {
-                if (in_array($i, $_SESSION['intento_actual']) ) {
-                    echo '<div class="carta descubierta">'.$cartas[$i].'</div>';
-                }
-                elseif (in_array($i, $_SESSION['encontradas'])) {
-                    echo '<div class="carta encontrada">'.$cartas[$i].'</div>';
-                } else {
-                    echo '<a href="?carta='.$i.'"><div class="carta"></div></a>';
-                }
-            }
-            echo '</div>';
-
-            ?>
+            <div class="board">
+                <?php
+                    $cartas = $_SESSION['cartas'];
+                    for ($i = 0; $i < count($cartas); $i++) {
+                        if (in_array($i, $_SESSION['intento_actual']) ) {
+                            echo '<div class="carta descubierta">'.$cartas[$i].'</div>';
+                        } elseif (in_array($i, $_SESSION['encontradas'])) {
+                            echo '<div class="carta encontrada">'.$cartas[$i].'</div>';
+                        } else {
+                            echo '<a href="?carta='.$i.'"><div class="carta"></div></a>';
+                        }
+                    }
+                ?>
+            </div>
         </div>
 
         <div class="info">
@@ -100,26 +98,25 @@
                 <p>Intentos: <?php echo $_SESSION['intentos']; ?></p>
                 <p>Aciertos: <?php echo $_SESSION['aciertos']; ?></p>
                 <?php
-                if ($debug){
-                    echo "<p>intento_actual: ". arrayToString($_SESSION['intento_actual'])."</p>";
-                    echo "<p>encontradas: ". arrayToString($_SESSION['encontradas'])."</p>";
-                }
-                if (count($_SESSION['intento_actual'])==2){
-                    // Agregar el enlace para ocultar las cartas
-                    echo '<p><button onclick="location.href=\'?ocultar=true\'">Ocultar cartas</button></p>';
-                }
-                // Verificar si el juego ha terminado
-                if ($_SESSION['aciertos'] == count($_SESSION['cartas'])/2) {
-                    echo "<p>¡Felicidades! Has ganado el juego en ".$_SESSION['intentos']." intentos.</p>";
-                    echo '<button onclick="location.href=\'index.php?restart=true\'" type=button>Jugar de nuevo</button>';
-                } ?>
+                    if ($debug){
+                        echo "<p>intento_actual: ". arrayToString($_SESSION['intento_actual'])."</p>";
+                        echo "<p>encontradas: ". arrayToString($_SESSION['encontradas'])."</p>";
+                    }
+                    if (count($_SESSION['intento_actual'])==2){
+                        // Agregar el enlace para ocultar las cartas
+                        echo '<p><button onclick="location.href=\'?ocultar=true\'">Ocultar cartas</button></p>';
+                    }
+                    // Verificar si el juego ha terminado
+                    if ($_SESSION['aciertos'] == count($_SESSION['cartas'])/2) {
+                        echo "<p>¡Felicidades! Has ganado el juego en ".$_SESSION['intentos']." intentos.</p>";
+                        echo '<button onclick="location.href=\'index.php?restart=true\'" type=button>Jugar de nuevo</button>';
+                    }
+                ?>
             </div>
 
             <div>
-                <?php
-                // Agregar el boton para reiniciar el juego en cualquier momento
-                echo '<p style="text-align: right;"><small><button onclick="location.href=\'index.php?restart=true\'" type=button>Reiniciar juego</button></small></p>';
-                ?>
+                <?php // Boton para reiniciar el juego en cualquier momento ?>
+                <p style="text-align: right;"><small><button onclick="location.href='index.php?restart=true'" type=button>Reiniciar juego</button></small></p>
             </div>
         </div>
     </div>
