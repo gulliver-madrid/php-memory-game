@@ -27,21 +27,29 @@ if ($debug){
 
 function registrarCarta(array $cartas)
 {
-    if (count($_SESSION['intento_actual'])<2){
-        $carta = $_GET['carta'];
-        if (!in_array($carta, $_SESSION['intento_actual'])) {
-            // Anadimos la carta pulsada
-            $_SESSION['intento_actual'][] = $carta;
-            if (count($_SESSION['intento_actual'])==2){
-                $_SESSION['intentos']++;
-                if ($cartas[$_SESSION['intento_actual'][0]] == $cartas[$_SESSION['intento_actual'][1]]) {
-                    $_SESSION['aciertos']++;
-                    $_SESSION['encontradas'][] = $_SESSION['intento_actual'][0];
-                    $_SESSION['encontradas'][] = $_SESSION['intento_actual'][1];
-                    $_SESSION['intento_actual'] = array();
-                }
-            }
-        }
+    if (count($_SESSION['intento_actual']) >= 2){
+        // Intento ya completado
+        return;
+    }
+    $carta = $_GET['carta'];
+    if (in_array($carta, $_SESSION['intento_actual'])) {
+        // Ya elegida
+        return;
+    }
+    // Anadimos la carta pulsada
+    $_SESSION['intento_actual'][] = $carta;
+    if (count($_SESSION['intento_actual']) != 2){
+        // Turno no completado
+        return;
+    }
+    // Evaluacion turno
+    $_SESSION['intentos']++;
+    $esAcierto = ($cartas[$_SESSION['intento_actual'][0]] == $cartas[$_SESSION['intento_actual'][1]]);
+    if ($esAcierto) {
+        $_SESSION['aciertos']++;
+        $_SESSION['encontradas'][] = $_SESSION['intento_actual'][0];
+        $_SESSION['encontradas'][] = $_SESSION['intento_actual'][1];
+        $_SESSION['intento_actual'] = array();
     }
 }
 
