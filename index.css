@@ -6,6 +6,10 @@ a {
     text-decoration: none;
 }
 
+h1 {
+    text-align: center;
+}
+
 .hbox {
     display: flex;
 }
@@ -21,7 +25,7 @@ a {
 .carta {
     width: 80px;
     height: 80px;
-    background-color: #f2f2f2;
+    background-color: #bbbbbb;
     margin: 5px;
     padding: 5px;
     text-align: center;
@@ -34,5 +38,15 @@ a {
 }
 
 .info {
-    margin-left: 60px;
+    padding-left: 60px;
+    padding-right: 20px;
+    background-color: #dddddd;
+    min-width: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.descubierta {
+    background-color: #f2f2f2;
 }
