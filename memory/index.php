@@ -34,15 +34,10 @@
             }
             // Anadimos la carta pulsada
             $this->intento_actual[] = $carta;
-            if (count($this->intento_actual) != 2){
-                // Turno no completado
-                return;
+            if (count($this->intento_actual) == 2){
+                $this->evaluarTurno();
             }
-
-            $this->evaluarTurno();
-            return;
         }
-
 
         public function evaluarTurno() {
             $this->intentos++;
@@ -96,9 +91,7 @@
 </head>
 <body>
     <h1>Juego de Memoria</h1>
-
     <div class='hbox'>
-
         <div>
             <div class="board">
                 <?php
@@ -136,7 +129,14 @@
 
             <div>
                 <?php // Boton para reiniciar el juego en cualquier momento ?>
-                <p style="text-align: right;"><small><button onclick="location.href='index.php?restart=true'" type=button>Reiniciar juego</button></small></p>
+                <p style="text-align: right;">
+                    <small>
+                        <button
+                            onclick="location.href='index.php?restart=true'" type=button>
+                                Reiniciar juego
+                        </button>
+                    </small>
+                </p>
             </div>
         </div>
     </div>
