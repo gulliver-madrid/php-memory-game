@@ -10,6 +10,51 @@
         public $encontradas;
         public $intentos;
         public $aciertos;
+
+        public function __construct() {
+            // Cartas del juego
+            $this->cartas = array('A', 'A', 'B', 'B', 'C', 'C', 'D', 'D', 'E', 'E', 'F', 'F', 'G', 'G', 'H', 'H');
+            // Barajar las cartas
+            shuffle($this->cartas);
+            $this->intento_actual = array();
+            $this->encontradas = array();
+            $this->intentos = 0;
+            $this->aciertos = 0;
+        }
+
+        public function registrarCarta(int $carta)
+        {
+            if (count($this->intento_actual) >= 2){
+                // Intento ya completado
+                return;
+            }
+            if (in_array($carta, $this->intento_actual)) {
+                // Ya elegida
+                return;
+            }
+            // Anadimos la carta pulsada
+            $this->intento_actual[] = $carta;
+            if (count($this->intento_actual) != 2){
+                // Turno no completado
+                return;
+            }
+
+            $this->evaluarTurno();
+            return;
+        }
+
+
+        public function evaluarTurno() {
+            $this->intentos++;
+            $cartas = $this->cartas;
+            $esAcierto = ($cartas[$this->intento_actual[0]] == $cartas[$this->intento_actual[1]]);
+            if ($esAcierto) {
+                $this->aciertos++;
+                $this->encontradas[] = $this->intento_actual[0];
+                $this->encontradas[] = $this->intento_actual[1];
+                $this->intento_actual = array();
+            }
+        }
     }
 
     // Iniciar el juego
@@ -21,14 +66,6 @@
     if (isset($_GET['restart']) || !isset($_SESSION['juego'])){
         $juego = new Juego();
         $_SESSION['juego'] = $juego;
-        // Cartas del juego
-        $juego->cartas = array('A', 'A', 'B', 'B', 'C', 'C', 'D', 'D', 'E', 'E', 'F', 'F', 'G', 'G', 'H', 'H');
-        // Barajar las cartas
-        shuffle($juego->cartas);
-        $juego->intento_actual = array();
-        $juego->encontradas = array();
-        $juego->intentos = 0;
-        $juego->aciertos = 0;
     } else {
         $juego = $_SESSION['juego'];
     }
@@ -40,41 +77,9 @@
         echo "<p>encontradas: ". arrayToString($juego->encontradas)."</p>";
     }
 
-    function registrarCarta(Juego $juego): Juego
-    {
-        if (count($juego->intento_actual) >= 2){
-            // Intento ya completado
-            return $juego;
-        }
-        $carta = $_GET['carta'];
-        if (in_array($carta, $juego->intento_actual)) {
-            // Ya elegida
-            return $juego;
-        }
-        // Anadimos la carta pulsada
-        $juego->intento_actual[] = $carta;
-        if (count($juego->intento_actual) != 2){
-            // Turno no completado
-            return $juego;
-        }
-        // Evaluacion turno
-        $juego->intentos++;
-        $cartas = $juego->cartas;
-        $esAcierto = ($cartas[$juego->intento_actual[0]] == $cartas[$juego->intento_actual[1]]);
-        if ($esAcierto) {
-            $juego->aciertos++;
-            $juego->encontradas[] = $juego->intento_actual[0];
-            $juego->encontradas[] = $juego->intento_actual[1];
-            $juego->intento_actual = array();
-        }
-        return $juego;
-    }
-
     // Obtener la carta seleccionada
     if (isset($_GET['carta'])) {
-        $cartas = $juego->cartas;
-        $juego = registrarCarta($juego);
-        assert ($juego);
+        $juego->registrarCarta($_GET['carta']);
     }
 
     if (isset($_GET['ocultar'])){
@@ -97,8 +102,6 @@
         <div>
             <div class="board">
                 <?php
-
-
                     $cartas = $juego->cartas;
                     for ($i = 0; $i < count($cartas); $i++) {
                         if (in_array($i, $juego->intento_actual) ) {
