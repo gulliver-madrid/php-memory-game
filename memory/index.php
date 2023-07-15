@@ -96,15 +96,21 @@
             <div class="board">
                 <?php
                     $cartas = $juego->cartas;
-                    for ($i = 0; $i < count($cartas); $i++) {
-                        if (in_array($i, $juego->intento_actual) ) {
-                            echo '<div class="carta descubierta">'.$cartas[$i].'</div>';
-                        } elseif (in_array($i, $juego->encontradas)) {
-                            echo '<div class="carta encontrada">'.$cartas[$i].'</div>';
-                        } else {
-                            echo '<a href="?carta='.$i.'"><div class="carta"></div></a>';
-                        }
-                    }
+                    for ($i = 0; $i < count($cartas); $i++):
+                        if (in_array($i, $juego->intento_actual)): ?>
+                            <div class="carta descubierta">
+                                <?= $cartas[$i] ?>
+                            </div>
+                        <?php elseif (in_array($i, $juego->encontradas)): ?>
+                            <div class="carta encontrada">
+                                <?= $cartas[$i] ?>
+                            </div>
+                        <?php else: ?>
+                            <a href="?carta=<?= $i ?>">
+                                <div class="carta"></div>
+                            </a>
+                        <?php endif;
+                    endfor;
                 ?>
             </div>
         </div>
