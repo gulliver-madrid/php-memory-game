@@ -49,6 +49,7 @@
         public function esCartaDescubierta(int $i) {
             return in_array($i, $this->intento_actual);
         }
+
         public function esCartaYaEncontrada(int $i) {
             return in_array($i, $this->encontradas);
         }

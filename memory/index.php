@@ -73,18 +73,25 @@
             <div>
                 <p>Intentos: <?php echo $juego->intentos; ?></p>
                 <p>Aciertos: <?php echo $juego->aciertos; ?></p>
-                <?php
+                <?php if ($juego->intentoRealizado()): ?>
+                    <p>
+                        <button onclick="location.href='?ocultar=true'">
+                            Ocultar cartas
+                        </button>
+                    </p>
+                <?php endif; ?>
 
-                    if ($juego->intentoRealizado()){
-                        // Agregar el enlace para ocultar las cartas
-                        echo '<p><button onclick="location.href=\'?ocultar=true\'">Ocultar cartas</button></p>';
-                    }
-                    // Verificar si el juego ha terminado
-                    if ($juego->completado()) {
-                        echo "<p>¡Felicidades! Has ganado el juego en ".$juego->intentos." intentos.</p>";
-                        echo '<button onclick="location.href=\'index.php?restart=true\'" type=button>Jugar de nuevo</button>';
-                    }
-                ?>
+                <?php if ($juego->completado()): ?>
+                    <p>
+                        ¡Felicidades! Has ganado el juego en <?= $juego->intentos ?> intentos.
+                    </p>
+                    <button
+                        onclick="location.href='index.php?restart=true'"
+                        type=button
+                    >
+                        Jugar de nuevo
+                    </button>
+                <?php endif; ?>
             </div>
 
             <div>
@@ -92,8 +99,10 @@
                 <p style="text-align: right;">
                     <small>
                         <button
-                            onclick="location.href='index.php?restart=true'" type=button>
-                                Reiniciar juego
+                            onclick="location.href='index.php?restart=true'"
+                            type=button
+                        >
+                            Reiniciar juego
                         </button>
                     </small>
                 </p>
