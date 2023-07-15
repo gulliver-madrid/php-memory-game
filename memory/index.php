@@ -50,6 +50,13 @@
                 $this->intento_actual = array();
             }
         }
+
+        public function esCartaDescubierta(int $i) {
+            return in_array($i, $this->intento_actual);
+        }
+        public function esCartaYaEncontrada(int $i) {
+            return in_array($i, $this->encontradas);
+        }
     }
 
     // Iniciar el juego
@@ -97,13 +104,14 @@
                 <?php
                     $cartas = $juego->cartas;
                     for ($i = 0; $i < count($cartas); $i++):
-                        if (in_array($i, $juego->intento_actual)): ?>
+                        $valor_carta = $cartas[$i];
+                        if ($juego->esCartaDescubierta($i)): ?>
                             <div class="carta descubierta">
-                                <?= $cartas[$i] ?>
+                                <?= $valor_carta ?>
                             </div>
-                        <?php elseif (in_array($i, $juego->encontradas)): ?>
+                        <?php elseif ($juego->esCartaYaEncontrada($i)): ?>
                             <div class="carta encontrada">
-                                <?= $cartas[$i] ?>
+                                <?= $valor_carta ?>
                             </div>
                         <?php else: ?>
                             <a href="?carta=<?= $i ?>">
