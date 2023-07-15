@@ -6,9 +6,9 @@
         public $intentos;
         public $aciertos;
 
-        public function __construct() {
+        public function __construct(array $cartas) {
             // Cartas del juego
-            $this->cartas = array('A', 'A', 'B', 'B', 'C', 'C', 'D', 'D', 'E', 'E', 'F', 'F', 'G', 'G', 'H', 'H');
+            $this->cartas = $cartas;
             // Barajar las cartas
             shuffle($this->cartas);
             $this->intento_actual = array();

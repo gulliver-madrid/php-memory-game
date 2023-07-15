@@ -1,6 +1,7 @@
 <?php
 
     require_once "helpers.php";
+    require_once "fileManager.php";
     require_once "game.php";
 
     $debug = false;
@@ -12,7 +13,12 @@
 
     // Verificar si se debe reiniciar el juego
     if (isset($_GET['restart']) || !isset($_SESSION['juego'])){
-        $juego = new Juego();
+        $image_files = obtenerArchivos("images");
+        if ($image_files == false){
+            $image_files = []; // TODO: generar error
+        }
+        $cartas = array_merge($image_files, $image_files);
+        $juego = new Juego($cartas);
         $_SESSION['juego'] = $juego;
     } else {
         $juego = $_SESSION['juego'];
@@ -51,13 +57,14 @@
                     $cartas = $juego->cartas;
                     for ($i = 0; $i < count($cartas); $i++):
                         $valor_carta = $cartas[$i];
+                        $src = "images/" . $valor_carta;
                         if ($juego->esCartaDescubierta($i)): ?>
                             <div class="carta descubierta">
-                                <?= $valor_carta ?>
+                                <img src="<?= $src ?>" width="80" height="80">
                             </div>
                         <?php elseif ($juego->esCartaYaEncontrada($i)): ?>
                             <div class="carta encontrada">
-                                <?= $valor_carta ?>
+                                <img src="<?= $src ?>" width="80" height="80">
                             </div>
                         <?php else: ?>
                             <a href="?carta=<?= $i ?>">
