@@ -19,11 +19,12 @@
 
         public function registrarCarta(int $carta)
         {
+            assert(!$this->esCartaYaEncontrada($carta));
             if (count($this->intento_actual) >= 2){
                 // Intento ya completado
                 return;
             }
-            if (in_array($carta, $this->intento_actual)) {
+            if ($this->esCartaDescubierta($carta)) {
                 // Ya elegida
                 return;
             }
@@ -37,11 +38,13 @@
         public function evaluarTurno() {
             $this->intentos++;
             $cartas = $this->cartas;
-            $esAcierto = ($cartas[$this->intento_actual[0]] == $cartas[$this->intento_actual[1]]);
+            assert($this->intentoRealizado());
+            [$primera, $segunda] = $this->intento_actual;
+            $esAcierto = ($cartas[$primera] == $cartas[$segunda]);
             if ($esAcierto) {
                 $this->aciertos++;
-                $this->encontradas[] = $this->intento_actual[0];
-                $this->encontradas[] = $this->intento_actual[1];
+                $this->encontradas[] = $primera;
+                $this->encontradas[] = $segunda;
                 $this->intento_actual = array();
             }
         }
