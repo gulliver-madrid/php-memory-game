@@ -4,6 +4,8 @@
     require_once "fileManager.php";
     require_once "game.php";
 
+    // clearSession();
+
     $debug = false;
 
     // Iniciar la sesion
@@ -25,11 +27,6 @@
     }
 
 
-    if ($debug){
-        echo "<p>Cartas barajadas: ".arrayToString($juego->cartas).'</p>';
-        echo "<p>intento_actual: ". arrayToString($juego->intento_actual)."</p>";
-        echo "<p>encontradas: ". arrayToString($juego->encontradas)."</p>";
-    }
 
     // Obtener la carta seleccionada
     if (isset($_GET['carta'])) {
@@ -38,7 +35,13 @@
 
     if (isset($_GET['ocultar'])){
         $juego->intento_actual = array();
-}
+    }
+
+    if ($debug){
+        echo "<p>Cartas barajadas: ".arrayToString($juego->cartas).'</p>';
+        echo "<p>intento_actual: ". arrayToString($juego->intento_actual)."</p>";
+        echo "<p>encontradas: ". arrayToString($juego->encontradas)."</p>";
+    }
 
 ?>
 
@@ -66,10 +69,12 @@
                             <div class="carta encontrada">
                                 <img src="<?= $src ?>" width="80" height="80">
                             </div>
-                        <?php else: ?>
+                        <?php elseif (count($juego->intento_actual) < 2): ?>
                             <a href="?carta=<?= $i ?>">
-                                <div class="carta"></div>
+                                <div class="carta clicable"></div>
                             </a>
+                        <?php else: ?>
+                            <div class="carta"></div>
                         <?php endif;
                     endfor;
                 ?>
