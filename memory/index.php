@@ -111,6 +111,7 @@
                 <p style="text-align: right;">
                     <small>
                         <button
+                            class="boton-reiniciar"
                             onclick="location.href='index.php?restart=true'"
                             type=button
                         >
