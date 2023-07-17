@@ -2,66 +2,66 @@
     require_once "helpers.php";
     $debug = false;
 
-// Iniciar el juego
-if (!isset($_SESSION)) {
-    session_start();
-}
-
-// Verificar si se debe reiniciar el juego
-if (isset($_GET['restart']) || !isset($_SESSION['cartas'])) {
-    // Cartas del juego
-    $cartas = array('A', 'A', 'B', 'B', 'C', 'C', 'D', 'D', 'E', 'E', 'F', 'F', 'G', 'G', 'H', 'H');
-    // Barajar las cartas
-    shuffle($cartas);
-
-    $_SESSION['cartas'] = $cartas;
-    $_SESSION['intento_actual'] = array();
-    $_SESSION['encontradas'] = array();
-    $_SESSION['intentos'] = 0;
-    $_SESSION['aciertos'] = 0;
-}
-
-if ($debug){
-    echo "<p>Cartas barajadas: ".arrayToString($_SESSION['cartas']).'</p>';
-}
-
-function registrarCarta(array $cartas)
-{
-    if (count($_SESSION['intento_actual']) >= 2){
-        // Intento ya completado
-        return;
+    // Iniciar el juego
+    if (!isset($_SESSION)) {
+        session_start();
     }
-    $carta = $_GET['carta'];
-    if (in_array($carta, $_SESSION['intento_actual'])) {
-        // Ya elegida
-        return;
+
+    // Verificar si se debe reiniciar el juego
+    if (isset($_GET['restart']) || !isset($_SESSION['cartas'])) {
+        // Cartas del juego
+        $cartas = array('A', 'A', 'B', 'B', 'C', 'C', 'D', 'D', 'E', 'E', 'F', 'F', 'G', 'G', 'H', 'H');
+        // Barajar las cartas
+        shuffle($cartas);
+
+        $_SESSION['cartas'] = $cartas;
+        $_SESSION['intento_actual'] = array();
+        $_SESSION['encontradas'] = array();
+        $_SESSION['intentos'] = 0;
+        $_SESSION['aciertos'] = 0;
     }
-    // Anadimos la carta pulsada
-    $_SESSION['intento_actual'][] = $carta;
-    if (count($_SESSION['intento_actual']) != 2){
-        // Turno no completado
-        return;
+
+    if ($debug){
+        echo "<p>Cartas barajadas: ".arrayToString($_SESSION['cartas']).'</p>';
     }
-    // Evaluacion turno
-    $_SESSION['intentos']++;
-    $esAcierto = ($cartas[$_SESSION['intento_actual'][0]] == $cartas[$_SESSION['intento_actual'][1]]);
-    if ($esAcierto) {
-        $_SESSION['aciertos']++;
-        $_SESSION['encontradas'][] = $_SESSION['intento_actual'][0];
-        $_SESSION['encontradas'][] = $_SESSION['intento_actual'][1];
+
+    function registrarCarta(array $cartas)
+    {
+        if (count($_SESSION['intento_actual']) >= 2){
+            // Intento ya completado
+            return;
+        }
+        $carta = $_GET['carta'];
+        if (in_array($carta, $_SESSION['intento_actual'])) {
+            // Ya elegida
+            return;
+        }
+        // Anadimos la carta pulsada
+        $_SESSION['intento_actual'][] = $carta;
+        if (count($_SESSION['intento_actual']) != 2){
+            // Turno no completado
+            return;
+        }
+        // Evaluacion turno
+        $_SESSION['intentos']++;
+        $esAcierto = ($cartas[$_SESSION['intento_actual'][0]] == $cartas[$_SESSION['intento_actual'][1]]);
+        if ($esAcierto) {
+            $_SESSION['aciertos']++;
+            $_SESSION['encontradas'][] = $_SESSION['intento_actual'][0];
+            $_SESSION['encontradas'][] = $_SESSION['intento_actual'][1];
+            $_SESSION['intento_actual'] = array();
+        }
+    }
+
+    // Obtener la carta seleccionada
+    if (isset($_GET['carta'])) {
+        $cartas = $_SESSION['cartas'];
+        registrarCarta($cartas);
+    }
+
+    if (isset($_GET['ocultar'])){
         $_SESSION['intento_actual'] = array();
     }
-}
-
-// Obtener la carta seleccionada
-if (isset($_GET['carta'])) {
-    $cartas = $_SESSION['cartas'];
-    registrarCarta($cartas);
-}
-
-if (isset($_GET['ocultar'])){
-    $_SESSION['intento_actual'] = array();
-}
 ?>
 
 <!DOCTYPE html>
