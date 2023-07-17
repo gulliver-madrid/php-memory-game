@@ -75,12 +75,12 @@
                 <p>Aciertos: <?php echo $juego->aciertos; ?></p>
                 <?php
 
-                    if (count($juego->intento_actual)==2){
+                    if ($juego->intentoRealizado()){
                         // Agregar el enlace para ocultar las cartas
                         echo '<p><button onclick="location.href=\'?ocultar=true\'">Ocultar cartas</button></p>';
                     }
                     // Verificar si el juego ha terminado
-                    if ($juego->aciertos == count($juego->cartas)/2) {
+                    if ($juego->completado()) {
                         echo "<p>¡Felicidades! Has ganado el juego en ".$juego->intentos." intentos.</p>";
                         echo '<button onclick="location.href=\'index.php?restart=true\'" type=button>Jugar de nuevo</button>';
                     }

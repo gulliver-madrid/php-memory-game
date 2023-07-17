@@ -29,7 +29,7 @@
             }
             // Anadimos la carta pulsada
             $this->intento_actual[] = $carta;
-            if (count($this->intento_actual) == 2){
+            if ($this->intentoRealizado()){
                 $this->evaluarTurno();
             }
         }
@@ -51,5 +51,11 @@
         }
         public function esCartaYaEncontrada(int $i) {
             return in_array($i, $this->encontradas);
+        }
+        public function intentoRealizado(): bool {
+            return count($this->intento_actual)==2;
+        }
+        public function completado(): bool {
+            return $this->aciertos == count($this->cartas)/2;
         }
     }
