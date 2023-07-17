@@ -1,15 +1,6 @@
 <?php
+    require_once "helpers.php";
     $debug = false;
-    function arrayToString(array $array) {
-        $str = "[";
-        foreach ($array as $item) {
-            $str .= $item . ", ";
-        }
-        // Eliminar la última coma y espacio, y añadir el corchete de cierre
-        $str = rtrim($str, ', ') . "]";
-        return $str;
-    }
-
 
 
 // Iniciar el juego
