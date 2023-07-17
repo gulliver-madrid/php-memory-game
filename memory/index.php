@@ -4,8 +4,6 @@
     require_once "fileManager.php";
     require_once "game.php";
 
-    // clearSession();
-
     $debug = false;
 
     // Iniciar la sesion
@@ -15,6 +13,7 @@
 
     // Verificar si se debe reiniciar el juego
     if (isset($_GET['restart']) || !isset($_SESSION['juego'])){
+        clearSession();
         $image_files = obtenerArchivos("images");
         if ($image_files == false){
             $image_files = []; // TODO: generar error
