@@ -1,81 +1,31 @@
-:root {
-    --cards-per-row: 4;
-}
-
 body {
-    background-color: rgb(37, 37, 37);
-    font-size: large;
-    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f8f8f8;
 }
 
-a {
+.container {
+    text-align: center;
+}
+
+.title {
+    font-size: 2em;
+    color: #333;
+}
+
+.start-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 1.2em;
+    background-color: #008CBA;
+    color: white;
+    border: none;
+    cursor: pointer;
     text-decoration: none;
 }
 
-h1 {
-    text-align: center;
-    color: rgb(201, 201, 3);
-}
-
-button {
-    background-color: black;
-    color: rgb(201, 201, 3);
-    padding: 12px;
-    border-radius: 6px;
-    font-size: large;
-}
-
-button:hover {
-    background-color: #222222;
-}
-
-.boton-reiniciar {
-    font-size: medium;
-}
-
-.hbox {
-    display: flex;
-}
-
-.board {
-    background-color: black;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: flex-start;
-    width: calc(100px * var(--cards-per-row));
-    padding: 12px;
-}
-
-.carta {
-    width: 80px;
-    height: 80px;
-    background-color: rgb(28, 28, 28);
-    margin: 5px;
-    padding: 5px;
-    text-align: center;
-    line-height: 70px;
-    font-size: 24px;
-}
-
-.clicable:hover {
-    background-color: rgb(59, 59, 59);
-}
-
-.encontrada {
-    background-color: green;
-}
-
-.info {
-    padding-left: 60px;
-    padding-right: 20px;
-    /* background-color: #222222; */
-    color: #bbbbbb;
-    min-width: 500px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.descubierta {
-    background-color: #f2f2f2;
+.start-button:hover {
+    background-color: #007B9A;
 }
