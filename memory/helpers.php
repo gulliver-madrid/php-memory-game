@@ -20,3 +20,7 @@
         // Inicia la sesión
         session_start();
     }
+
+    function consoleLog(string $text){
+        echo "<script>console.log('" . $text . "')</script>";
+    }
