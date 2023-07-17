@@ -19,7 +19,10 @@
             $image_files = []; // TODO: generar error
         }
         $cartas = array_merge($image_files, $image_files);
-        $juego = new Juego($cartas);
+        assert(isset($_GET['jugadores']));
+        $num_jugadores = $_GET['jugadores'];
+        assert($num_jugadores == 1 || $num_jugadores == 2);
+        $juego = new Juego($cartas, $num_jugadores);
         $_SESSION['juego'] = $juego;
     } else {
         $juego = $_SESSION['juego'];
@@ -34,6 +37,7 @@
 
     if (isset($_GET['ocultar'])){
         $juego->intento_actual = array();
+        $juego->pasarTurno();
     }
 
     if ($debug){
@@ -82,20 +86,41 @@
 
         <div class="info">
             <div>
-                <p>Intentos: <?php echo $juego->intentos; ?></p>
-                <p>Aciertos: <?php echo $juego->aciertos; ?></p>
+                <?php if ($juego->num_jugadores == 2): ?>
+                    <p>Jugador actual: <?php echo $juego->jugador_actual + 1; ?></p>
+                    <p>Turnos: <?php echo $juego->intentos; ?></p>
+                <?php else: ?>
+                    <p>Intentos: <?php echo $juego->intentos; ?></p>
+                <?php endif; ?>
+                <?php if ($juego->num_jugadores == 1): ?>
+                    <p>Aciertos: <?php echo $juego->aciertos[0]; ?></p>
+                <?php else: ?>
+                    <p>Aciertos jugador 1: <?php echo $juego->aciertos[0]; ?></p>
+                    <p>Aciertos jugador 2: <?php echo $juego->aciertos[1]; ?></p>
+                <?php endif; ?>
                 <?php if ($juego->intentoRealizado()): ?>
                     <p>
                         <button onclick="location.href='?ocultar=true'">
-                            Ocultar cartas
+                            <?php if ($juego->num_jugadores == 2): ?>
+                                Cambiar jugador
+                            <?php else: ?>
+                                Ocultar cartas
+                            <?php endif; ?>
                         </button>
                     </p>
                 <?php endif; ?>
 
                 <?php if ($juego->completado()): ?>
+                    <?php if ($juego->num_jugadores == 1): ?>
+
                     <p>
                         ¡Felicidades! Has ganado el juego en <?= $juego->intentos ?> intentos.
                     </p>
+                    <?php else: ?>
+                    <p>
+                        Juego finalizado
+                    </p>
+                    <?php endif; ?>
                     <button
                         onclick="location.href='main.php?restart=true'"
                         type=button
