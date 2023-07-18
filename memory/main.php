@@ -28,8 +28,6 @@
         $juego = $_SESSION['juego'];
     }
 
-
-
     // Obtener la carta seleccionada
     if (isset($_GET['carta'])) {
         $juego->registrarCarta($_GET['carta']);
@@ -41,9 +39,35 @@
     }
 
     if ($debug){
+        debug_output($juego);
+    }
+
+    function debug_output($juego) {
         echo "<p>Cartas barajadas: ".arrayToString($juego->cartas).'</p>';
         echo "<p>intento_actual: ". arrayToString($juego->intento_actual)."</p>";
         echo "<p>encontradas: ". arrayToString($juego->encontradas)."</p>";
+    }
+
+    // Crea una tarjeta en el tablero
+    function createSquare($juego, $i){
+        $cartas = $juego->cartas;
+        $valor_carta = $cartas[$i];
+        $src = "images/" . $valor_carta;
+        if ($juego->esCartaDescubierta($i)): ?>
+            <div class="carta descubierta">
+                <img src="<?= $src ?>" width="80" height="80">
+            </div>
+        <?php elseif ($juego->esCartaYaEncontrada($i)): ?>
+            <div class="carta encontrada">
+                <img src="<?= $src ?>" width="80" height="80">
+            </div>
+        <?php elseif (!$juego->intentoRealizado()): ?>
+            <a href="?carta=<?= $i ?>">
+                <div class="carta clicable"></div>
+            </a>
+        <?php else: ?>
+            <div class="carta"></div>
+        <?php endif;
     }
 
 ?>
@@ -62,23 +86,7 @@
                 <?php
                     $cartas = $juego->cartas;
                     for ($i = 0; $i < count($cartas); $i++):
-                        $valor_carta = $cartas[$i];
-                        $src = "images/" . $valor_carta;
-                        if ($juego->esCartaDescubierta($i)): ?>
-                            <div class="carta descubierta">
-                                <img src="<?= $src ?>" width="80" height="80">
-                            </div>
-                        <?php elseif ($juego->esCartaYaEncontrada($i)): ?>
-                            <div class="carta encontrada">
-                                <img src="<?= $src ?>" width="80" height="80">
-                            </div>
-                        <?php elseif (count($juego->intento_actual) < 2): ?>
-                            <a href="?carta=<?= $i ?>">
-                                <div class="carta clicable"></div>
-                            </a>
-                        <?php else: ?>
-                            <div class="carta"></div>
-                        <?php endif;
+                        createSquare($juego, $i);
                     endfor;
                 ?>
             </div>
