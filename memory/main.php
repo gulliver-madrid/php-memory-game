@@ -70,6 +70,19 @@
         <?php endif;
     }
 
+    function displayBoard($juego){
+    ?>
+        <div class="board">
+            <?php
+                $cartas = $juego->cartas;
+                for ($i = 0; $i < count($cartas); $i++):
+                    createSquare($juego, $i);
+                endfor;
+            ?>
+        </div>
+    <?php
+    }
+
 
     // Muestra la informacion de final de juego y el boton de volver a jugar
     function displayEndGame($juego){
@@ -109,12 +122,15 @@
             <?php else: ?>
                 <p>Intentos: <?php echo $juego->intentos; ?></p>
             <?php endif; ?>
+
+            <?php $aciertos = $juego->aciertos; ?>
             <?php if ($juego->num_jugadores == 1): ?>
-                <p>Aciertos: <?php echo $juego->aciertos[0]; ?></p>
+                <p>Aciertos: <?php echo $aciertos[0]; ?></p>
             <?php else: ?>
-                <p>Aciertos jugador 1: <?php echo $juego->aciertos[0]; ?></p>
-                <p>Aciertos jugador 2: <?php echo $juego->aciertos[1]; ?></p>
+                <p>Aciertos jugador 1: <?php echo $aciertos[0]; ?></p>
+                <p>Aciertos jugador 2: <?php echo $aciertos[1]; ?></p>
             <?php endif; ?>
+
             <?php if ($juego->intentoRealizado()):
                 $button_text = ($juego->num_jugadores == 2)
                     ? "Cambiar jugador"
@@ -144,14 +160,9 @@
     <h1>Juego de Memoria</h1>
     <div class='hbox'>
         <div>
-            <div class="board">
-                <?php
-                    $cartas = $juego->cartas;
-                    for ($i = 0; $i < count($cartas); $i++):
-                        createSquare($juego, $i);
-                    endfor;
-                ?>
-            </div>
+            <?php
+                displayBoard($juego)
+            ?>
         </div>
 
         <div class="info">
