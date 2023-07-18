@@ -70,6 +70,34 @@
         <?php endif;
     }
 
+    // Muestra la informacion de final de juego y el boton de volver a jugar
+    function displayEndGame($juego){
+        if ($juego->completado()): ?>
+            <?php if ($juego->num_jugadores == 1): ?>
+                <p>
+                    ¡Felicidades! Has ganado el juego en <?= $juego->intentos ?> intentos.
+                </p>
+            <?php else: ?>
+                <p>
+                    Juego finalizado
+                </p>
+            <?php endif; ?>
+            <?php
+                $handle_click_attr = (
+                    "location.href='main.php?restart=true&jugadores=" .
+                    $juego->num_jugadores .
+                    "'"
+                )
+            ?>
+            <button
+                onclick=<?= $handle_click_attr ?>
+                type=button
+            >
+                Jugar de nuevo
+            </button>
+        <?php endif;
+    }
+
 ?>
 
 <!DOCTYPE html>
@@ -118,24 +146,7 @@
                     </p>
                 <?php endif; ?>
 
-                <?php if ($juego->completado()): ?>
-                    <?php if ($juego->num_jugadores == 1): ?>
-
-                    <p>
-                        ¡Felicidades! Has ganado el juego en <?= $juego->intentos ?> intentos.
-                    </p>
-                    <?php else: ?>
-                    <p>
-                        Juego finalizado
-                    </p>
-                    <?php endif; ?>
-                    <button
-                        onclick="location.href='main.php?restart=true'"
-                        type=button
-                    >
-                        Jugar de nuevo
-                    </button>
-                <?php endif; ?>
+                <?php displayEndGame($juego); ?>
             </div>
 
             <div>
