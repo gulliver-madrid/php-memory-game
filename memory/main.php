@@ -69,6 +69,8 @@
                 <?= displayCardImage($src) ?>
             </div>
         <?php elseif ($juego->esCartaYaEncontrada($i)): ?>
+            <div class="carta recogida"></div>
+        <?php elseif ($juego->esCartaEncontradaEsteTurno($i)): ?>
             <div class="carta encontrada">
                 <?= displayCardImage($src) ?>
             </div>

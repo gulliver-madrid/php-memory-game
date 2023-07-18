@@ -57,6 +57,10 @@ button:hover {
     font-size: 24px;
 }
 
+.recogida {
+    visibility: hidden;
+}
+
 .clicable:hover {
     background-color: rgb(59, 59, 59);
 }

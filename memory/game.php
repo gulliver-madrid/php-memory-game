@@ -15,6 +15,7 @@
             shuffle($this->cartas);
             $this->intento_actual = array();
             $this->encontradas = array();
+            $this->encontradas_este_turno = array();
             $this->intentos = 0;
             $this->aciertos = array_fill(0, $num_jugadores, 0);
             $this->jugador_actual = 0;
@@ -47,8 +48,8 @@
             $esAcierto = ($cartas[$primera] == $cartas[$segunda]);
             if ($esAcierto) {
                 $this->aciertos[$this->jugador_actual]++;
-                $this->encontradas[] = $primera;
-                $this->encontradas[] = $segunda;
+                $this->encontradas_este_turno[] = $primera;
+                $this->encontradas_este_turno[] = $segunda;
                 $this->intento_actual = array();
             }
         }
@@ -61,12 +62,19 @@
                     $this->jugador_actual = 0;
                 }
             }
+            foreach($this->encontradas_este_turno as $i){
+                $this->encontradas[] = $i;
+            }
+            $this->encontradas_este_turno = array();
         }
 
         public function esCartaDescubierta(int $i) {
             return in_array($i, $this->intento_actual);
         }
 
+        public function esCartaEncontradaEsteTurno(int $i) {
+            return in_array($i, $this->encontradas_este_turno);
+        }
         public function esCartaYaEncontrada(int $i) {
             return in_array($i, $this->encontradas);
         }
