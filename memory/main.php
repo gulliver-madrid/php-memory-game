@@ -36,31 +36,31 @@
         debug_output($juego);
     }
 
-    function startGame($num_jugadores){
+    function startGame(int $num_jugadores){
+        assert($num_jugadores == 1 || $num_jugadores == 2);
         $image_files = obtenerArchivos("images");
         if ($image_files == false){
             $image_files = []; // TODO: generar error
         }
         $cartas = array_merge($image_files, $image_files);
-        assert($num_jugadores == 1 || $num_jugadores == 2);
         $juego = new Juego($cartas, $num_jugadores);
         return $juego;
     }
 
-    function debug_output($juego) {
+    function debug_output(Juego $juego) {
         echo "<p>Cartas barajadas: ".arrayToString($juego->cartas).'</p>';
         echo "<p>intento_actual: ". arrayToString($juego->intento_actual)."</p>";
         echo "<p>encontradas: ". arrayToString($juego->encontradas)."</p>";
     }
 
-    function displayCardImage($src){
+    function displayCardImage(string $src){
     ?>
         <img src="<?= $src ?>" width="80" height="80">
     <?php
     }
 
     // Crea una tarjeta en el tablero
-    function createSquare($juego, $i){
+    function displaySquare(Juego $juego, int $i){
         $cartas = $juego->cartas;
         $valor_carta = $cartas[$i];
         $src = "images/" . $valor_carta;
@@ -83,13 +83,13 @@
         <?php endif;
     }
 
-    function displayBoard($juego){
+    function displayBoard(Juego $juego){
     ?>
         <div class="board">
             <?php
                 $cartas = $juego->cartas;
                 for ($i = 0; $i < count($cartas); $i++):
-                    createSquare($juego, $i);
+                    displaySquare($juego, $i);
                 endfor;
             ?>
         </div>
@@ -98,7 +98,7 @@
 
 
     // Muestra la informacion de final de juego y el boton de volver a jugar
-    function displayEndGame($juego){
+    function displayEndGame(Juego $juego){
         if ($juego->completado()): ?>
             <?php if ($juego->num_jugadores == 1): ?>
                 <p>
@@ -126,7 +126,7 @@
     }
 
     // Muestra informacion sobre el juego
-    function displayInfo($juego){
+    function displayInfo(Juego $juego){
     ?>
         <div>
             <?php if ($juego->num_jugadores == 2): ?>

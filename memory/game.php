@@ -68,14 +68,14 @@
             $this->encontradas_este_turno = array();
         }
 
-        public function esCartaDescubierta(int $i) {
+        public function esCartaDescubierta(int $i): bool {
             return in_array($i, $this->intento_actual);
         }
 
-        public function esCartaEncontradaEsteTurno(int $i) {
+        public function esCartaEncontradaEsteTurno(int $i): bool {
             return in_array($i, $this->encontradas_este_turno);
         }
-        public function esCartaYaEncontrada(int $i) {
+        public function esCartaYaEncontrada(int $i): bool {
             return in_array($i, $this->encontradas);
         }
         public function intentoRealizado(): bool {
