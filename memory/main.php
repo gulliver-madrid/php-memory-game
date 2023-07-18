@@ -14,15 +14,9 @@
     // Verificar si se debe reiniciar el juego
     if (isset($_GET['restart']) || !isset($_SESSION['juego'])){
         clearSession();
-        $image_files = obtenerArchivos("images");
-        if ($image_files == false){
-            $image_files = []; // TODO: generar error
-        }
-        $cartas = array_merge($image_files, $image_files);
         assert(isset($_GET['jugadores']));
         $num_jugadores = $_GET['jugadores'];
-        assert($num_jugadores == 1 || $num_jugadores == 2);
-        $juego = new Juego($cartas, $num_jugadores);
+        $juego = startGame($num_jugadores);
         $_SESSION['juego'] = $juego;
     } else {
         $juego = $_SESSION['juego'];
@@ -40,6 +34,17 @@
 
     if ($debug){
         debug_output($juego);
+    }
+
+    function startGame($num_jugadores){
+        $image_files = obtenerArchivos("images");
+        if ($image_files == false){
+            $image_files = []; // TODO: generar error
+        }
+        $cartas = array_merge($image_files, $image_files);
+        assert($num_jugadores == 1 || $num_jugadores == 2);
+        $juego = new Juego($cartas, $num_jugadores);
+        return $juego;
     }
 
     function debug_output($juego) {
