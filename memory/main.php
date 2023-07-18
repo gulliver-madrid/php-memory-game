@@ -60,27 +60,33 @@
     }
 
     // Crea una tarjeta en el tablero
-    function displaySquare(Juego $juego, int $i){
+    function displaySquare(Juego $juego, int $i) {
         $cartas = $juego->cartas;
         $valor_carta = $cartas[$i];
         $src = "images/" . $valor_carta;
-        if ($juego->esCartaDescubierta($i)): ?>
-            <div class="carta descubierta">
-                <?= displayCardImage($src) ?>
-            </div>
-        <?php elseif ($juego->esCartaYaEncontrada($i)): ?>
-            <div class="carta recogida"></div>
-        <?php elseif ($juego->esCartaEncontradaEsteTurno($i)): ?>
-            <div class="carta encontrada">
-                <?= displayCardImage($src) ?>
-            </div>
-        <?php elseif (!$juego->intentoRealizado()): ?>
-            <a href="?carta=<?= $i ?>">
-                <div class="carta clicable"></div>
-            </a>
-        <?php else: ?>
-            <div class="carta"></div>
-        <?php endif;
+        switch (getDisplayValue($juego, $i)) {
+            case DisplayValue::Descubierta: ?>
+                <div class="carta descubierta">
+                    <?= displayCardImage($src) ?>
+                </div>
+                <?php break;
+            case DisplayValue::YaEncontrada: ?>
+                <div class="carta recogida"></div>
+                <?php break;
+            case DisplayValue::EncontradaEsteTurno: ?>
+                <div class="carta encontrada">
+                    <?= displayCardImage($src) ?>
+                </div>
+                <?php break;
+            case DisplayValue::Clicable: ?>
+                <a href="?carta=<?= $i ?>">
+                    <div class="carta clicable"></div>
+                </a>
+                <?php break;
+            case DisplayValue::NoClicable: ?>
+                <div class="carta"></div>
+                <?php break;
+        }
     }
 
     function displayBoard(Juego $juego){

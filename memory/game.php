@@ -85,3 +85,26 @@
             return array_sum($this->aciertos) == count($this->cartas)/2;
         }
     }
+
+    enum DisplayValue
+    {
+        case Descubierta;
+        case YaEncontrada;
+        case EncontradaEsteTurno;
+        case Recogida;
+        case Clicable;
+        case NoClicable;
+    }
+
+    function getDisplayValue(Juego $juego, int $i): DisplayValue {
+        if ($juego->esCartaDescubierta($i))
+            return DisplayValue::Descubierta;
+        elseif ($juego->esCartaYaEncontrada($i))
+            return DisplayValue::YaEncontrada;
+        elseif ($juego->esCartaEncontradaEsteTurno($i))
+            return DisplayValue::EncontradaEsteTurno;
+        elseif (!$juego->intentoRealizado())
+            return DisplayValue::Clicable;
+        else
+            return DisplayValue::NoClicable;
+    }
