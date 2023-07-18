@@ -117,18 +117,18 @@
     ?>
         <div>
             <?php if ($juego->num_jugadores == 2): ?>
-                <p>Jugador actual: <?php echo $juego->jugador_actual + 1; ?></p>
-                <p>Turnos: <?php echo $juego->intentos; ?></p>
+                <p>Jugador actual: <?= $juego->jugador_actual + 1 ?></p>
+                <p>Turnos: <?= $juego->intentos ?></p>
             <?php else: ?>
-                <p>Intentos: <?php echo $juego->intentos; ?></p>
+                <p>Intentos: <?= $juego->intentos ?></p>
             <?php endif; ?>
 
             <?php $aciertos = $juego->aciertos; ?>
             <?php if ($juego->num_jugadores == 1): ?>
-                <p>Aciertos: <?php echo $aciertos[0]; ?></p>
+                <p>Aciertos: <?= $aciertos[0] ?></p>
             <?php else: ?>
-                <p>Aciertos jugador 1: <?php echo $aciertos[0]; ?></p>
-                <p>Aciertos jugador 2: <?php echo $aciertos[1]; ?></p>
+                <p>Aciertos jugador 1: <?= $aciertos[0] ?></p>
+                <p>Aciertos jugador 2: <?= $aciertos[1] ?></p>
             <?php endif; ?>
 
             <?php if ($juego->intentoRealizado()):
