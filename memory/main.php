@@ -54,8 +54,9 @@
     }
 
     function displayCardImage(string $src){
+        return "<img src=\"{$src}\" width=\"80\" height=\"80\">"
     ?>
-        <img src="<?= $src ?>" width="80" height="80">
+
     <?php
     }
 
@@ -64,28 +65,23 @@
         $cartas = $juego->cartas;
         $valor_carta = $cartas[$i];
         $src = "images/" . $valor_carta;
+
         switch (getDisplayValue($juego, $i)) {
-            case DisplayValue::Descubierta: ?>
-                <div class="carta descubierta">
-                    <?= displayCardImage($src) ?>
-                </div>
-                <?php break;
-            case DisplayValue::YaEncontrada: ?>
-                <div class="carta recogida"></div>
-                <?php break;
-            case DisplayValue::EncontradaEsteTurno: ?>
-                <div class="carta encontrada">
-                    <?= displayCardImage($src) ?>
-                </div>
-                <?php break;
-            case DisplayValue::Clicable: ?>
-                <a href="?carta=<?= $i ?>">
-                    <div class="carta clicable"></div>
-                </a>
-                <?php break;
-            case DisplayValue::NoClicable: ?>
-                <div class="carta"></div>
-                <?php break;
+            case DisplayValue::Descubierta:
+                echo "<div class=\"carta descubierta\">" . displayCardImage($src) . "</div>";
+                break;
+            case DisplayValue::YaEncontrada:
+                echo "<div class=\"carta recogida\"></div>";
+                break;
+            case DisplayValue::EncontradaEsteTurno:
+                echo "<div class=\"carta encontrada\">" . displayCardImage($src) . "</div>";
+                break;
+            case DisplayValue::Clicable:
+                echo "<a href=\"?carta={$i}\"><div class=\"carta clicable\"></div></a>";
+                break;
+            case DisplayValue::NoClicable:
+                echo "<div class=\"carta\"></div>";
+                break;
         }
     }
 
