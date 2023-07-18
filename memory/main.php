@@ -48,6 +48,12 @@
         echo "<p>encontradas: ". arrayToString($juego->encontradas)."</p>";
     }
 
+    function displayCardImage($src){
+    ?>
+        <img src="<?= $src ?>" width="80" height="80">
+    <?php
+    }
+
     // Crea una tarjeta en el tablero
     function createSquare($juego, $i){
         $cartas = $juego->cartas;
@@ -55,11 +61,11 @@
         $src = "images/" . $valor_carta;
         if ($juego->esCartaDescubierta($i)): ?>
             <div class="carta descubierta">
-                <img src="<?= $src ?>" width="80" height="80">
+                <?= displayCardImage($src) ?>
             </div>
         <?php elseif ($juego->esCartaYaEncontrada($i)): ?>
             <div class="carta encontrada">
-                <img src="<?= $src ?>" width="80" height="80">
+                <?= displayCardImage($src) ?>
             </div>
         <?php elseif (!$juego->intentoRealizado()): ?>
             <a href="?carta=<?= $i ?>">
