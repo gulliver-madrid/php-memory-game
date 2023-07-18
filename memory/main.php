@@ -70,6 +70,7 @@
         <?php endif;
     }
 
+
     // Muestra la informacion de final de juego y el boton de volver a jugar
     function displayEndGame($juego){
         if ($juego->completado()): ?>
@@ -98,6 +99,39 @@
         <?php endif;
     }
 
+    // Muestra informacion sobre el juego
+    function displayInfo($juego){
+    ?>
+        <div>
+            <?php if ($juego->num_jugadores == 2): ?>
+                <p>Jugador actual: <?php echo $juego->jugador_actual + 1; ?></p>
+                <p>Turnos: <?php echo $juego->intentos; ?></p>
+            <?php else: ?>
+                <p>Intentos: <?php echo $juego->intentos; ?></p>
+            <?php endif; ?>
+            <?php if ($juego->num_jugadores == 1): ?>
+                <p>Aciertos: <?php echo $juego->aciertos[0]; ?></p>
+            <?php else: ?>
+                <p>Aciertos jugador 1: <?php echo $juego->aciertos[0]; ?></p>
+                <p>Aciertos jugador 2: <?php echo $juego->aciertos[1]; ?></p>
+            <?php endif; ?>
+            <?php if ($juego->intentoRealizado()):
+                $button_text = ($juego->num_jugadores == 2)
+                    ? "Cambiar jugador"
+                    : "Ocultar cartas";
+                ?>
+                <p>
+                    <button onclick="location.href='?ocultar=true'">
+                        <?= $button_text ?>
+                    </button>
+                </p>
+            <?php endif; ?>
+
+            <?php displayEndGame($juego); ?>
+        </div>
+    <?php
+    }
+
 ?>
 
 <!DOCTYPE html>
@@ -121,34 +155,7 @@
         </div>
 
         <div class="info">
-            <div>
-                <?php if ($juego->num_jugadores == 2): ?>
-                    <p>Jugador actual: <?php echo $juego->jugador_actual + 1; ?></p>
-                    <p>Turnos: <?php echo $juego->intentos; ?></p>
-                <?php else: ?>
-                    <p>Intentos: <?php echo $juego->intentos; ?></p>
-                <?php endif; ?>
-                <?php if ($juego->num_jugadores == 1): ?>
-                    <p>Aciertos: <?php echo $juego->aciertos[0]; ?></p>
-                <?php else: ?>
-                    <p>Aciertos jugador 1: <?php echo $juego->aciertos[0]; ?></p>
-                    <p>Aciertos jugador 2: <?php echo $juego->aciertos[1]; ?></p>
-                <?php endif; ?>
-                <?php if ($juego->intentoRealizado()): ?>
-                    <p>
-                        <button onclick="location.href='?ocultar=true'">
-                            <?php if ($juego->num_jugadores == 2): ?>
-                                Cambiar jugador
-                            <?php else: ?>
-                                Ocultar cartas
-                            <?php endif; ?>
-                        </button>
-                    </p>
-                <?php endif; ?>
-
-                <?php displayEndGame($juego); ?>
-            </div>
-
+            <?php displayInfo($juego); ?>
             <div>
                 <?php // Boton para reiniciar el juego en cualquier momento ?>
                 <p style="text-align: right;">
