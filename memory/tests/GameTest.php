@@ -39,6 +39,19 @@
             $this->assertEquals(1, count($juego->intento_actual));
         }
 
+        public function testNoEncuentraUnaPareja(){
+            $juego = new Juego(crearValoresCartasEjemplo(), 1);
+            $juego->cartas = crearValoresCartasColocadasEjemplo();
+            $juego->registrarCarta(0);
+            $juego->registrarCarta(1);
+            // El intento actual tiene dos cartas
+            $this->assertEquals(2, count($juego->intento_actual));
+            // Hay 0 cartas anotadas como encontradas este turno
+            $this->assertEquals(0, count($juego->encontradas_este_turno));
+            // El jugador 1 no tiene aciertos anotados
+            $this->assertEquals(0, $juego->aciertos[0]);
+        }
+
         public function testEncuentraUnaPareja(){
             $juego = new Juego(crearValoresCartasEjemplo(), 1);
             $juego->cartas = crearValoresCartasColocadasEjemplo();
