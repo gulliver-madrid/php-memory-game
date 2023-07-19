@@ -23,19 +23,19 @@
             $this->num_jugadores = $num_jugadores;
         }
 
-        public function registrarCarta(int $carta)
+        public function registrarCarta(int $indice_carta)
         {
-            assert(!$this->esCartaYaEncontrada($carta));
+            assert(!$this->esCartaYaEncontrada($indice_carta));
             if (count($this->intento_actual) >= 2){
                 // Intento ya completado
                 return;
             }
-            if ($this->esCartaDescubierta($carta)) {
+            if ($this->esCartaDescubierta($indice_carta)) {
                 // Ya elegida
                 return;
             }
             // Anadimos la carta pulsada
-            $this->intento_actual[] = $carta;
+            $this->intento_actual[] = $indice_carta;
             if ($this->intentoRealizado()){
                 $this->evaluarTurno();
             }
