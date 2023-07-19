@@ -101,30 +101,26 @@
 
     // Muestra la informacion de final de juego y el boton de volver a jugar
     function displayEndGame(Juego $juego){
-        if ($juego->completado()): ?>
-            <?php if ($juego->num_jugadores == 1): ?>
-                <p>
-                    ¡Felicidades! Has ganado el juego en <?= $juego->turno ?> intentos.
-                </p>
-            <?php else: ?>
-                <p>
-                    Juego finalizado
-                </p>
-            <?php endif; ?>
-            <?php
-                $handle_click_attr = (
-                    "location.href='main.php?restart=true&jugadores=" .
-                    $juego->num_jugadores .
-                    "'"
-                )
-            ?>
-            <button
-                onclick=<?= $handle_click_attr ?>
-                type=button
-            >
-                Jugar de nuevo
-            </button>
-        <?php endif;
+        if (!$juego->completado())
+            return;
+
+        $texto_fin_juego = ($juego->num_jugadores == 1) ?
+             "¡Felicidades! Has ganado el juego en $juego->turno intentos." :
+             "Juego finalizado";
+        $handle_click_attr = (
+            "location.href='main.php?restart=true&jugadores=" .
+            $juego->num_jugadores .
+            "'"
+        )
+        ?>
+        <p><?= $texto_fin_juego ?></p>
+        <button
+            onclick=<?= $handle_click_attr ?>
+            type=button
+        >
+            Jugar de nuevo
+        </button>
+        <?php
     }
 
     // Muestra informacion sobre el juego
