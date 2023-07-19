@@ -104,7 +104,7 @@
         if ($juego->completado()): ?>
             <?php if ($juego->num_jugadores == 1): ?>
                 <p>
-                    ¡Felicidades! Has ganado el juego en <?= $juego->intentos ?> intentos.
+                    ¡Felicidades! Has ganado el juego en <?= $juego->turno ?> intentos.
                 </p>
             <?php else: ?>
                 <p>
@@ -133,9 +133,9 @@
         <div>
             <?php if ($juego->num_jugadores == 2): ?>
                 <p>Jugador actual: <?= $juego->jugador_actual + 1 ?></p>
-                <p>Turnos: <?= $juego->intentos ?></p>
+                <p>Turno: <?= $juego->turno ?></p>
             <?php else: ?>
-                <p>Intentos: <?= $juego->intentos ?></p>
+                <p>Intento: <?= $juego->turno ?></p>
             <?php endif; ?>
 
             <?php $aciertos = $juego->aciertos; ?>

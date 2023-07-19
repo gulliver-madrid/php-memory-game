@@ -3,7 +3,8 @@
         public $cartas;
         public $intento_actual;
         public $encontradas;
-        public $intentos;
+        public $encontradas_este_turno;
+        public $turno;
         public $aciertos;
         public $jugador_actual;
         public $num_jugadores;
@@ -16,7 +17,7 @@
             $this->intento_actual = array();
             $this->encontradas = array();
             $this->encontradas_este_turno = array();
-            $this->intentos = 0;
+            $this->turno = 1;
             $this->aciertos = array_fill(0, $num_jugadores, 0);
             $this->jugador_actual = 0;
             $this->num_jugadores = $num_jugadores;
@@ -41,7 +42,6 @@
         }
 
         public function evaluarTurno() {
-            $this->intentos++;
             $cartas = $this->cartas;
             assert($this->intentoRealizado());
             [$primera, $segunda] = $this->intento_actual;
@@ -66,6 +66,9 @@
                 $this->encontradas[] = $i;
             }
             $this->encontradas_este_turno = array();
+            if ($this->jugador_actual == 0) {
+                $this->turno++;
+            }
         }
 
         public function esCartaDescubierta(int $i): bool {
