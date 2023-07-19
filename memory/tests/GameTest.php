@@ -11,30 +11,34 @@
 
     class GameTest extends TestCase
     {
-        public function testGameOnePlayer()
+        public function testNewGameOnePlayer()
         {
             $juego = new Juego(crearValoresCartasEjemplo(), 1);
             $this->assertJuegoBienInicializado($juego);
             $this->assertEquals(1, count($juego->aciertos));
             $this->assertEquals(6, count($juego->cartas));
         }
-        public function testGameTwoPlayers()
+
+        public function testNewGameTwoPlayers()
         {
             $juego = new Juego(crearValoresCartasEjemplo(), 2);
             $this->assertJuegoBienInicializado($juego);
             $this->assertEquals(2, count($juego->aciertos));
         }
+
         public function testRegistrarCarta(){
             $juego = new Juego(crearValoresCartasEjemplo(), 1);
             $juego->registrarCarta(0);
             $this->assertEquals(1, count($juego->intento_actual));
         }
+
         public function testRegistrarCartaDosVecesNoCambiaNada(){
             $juego = new Juego(crearValoresCartasEjemplo(), 1);
             $juego->registrarCarta(0);
             $juego->registrarCarta(0);
             $this->assertEquals(1, count($juego->intento_actual));
         }
+
         public function testEncuentraUnaPareja(){
             $juego = new Juego(crearValoresCartasEjemplo(), 1);
             $juego->cartas = crearValoresCartasColocadasEjemplo();
@@ -47,6 +51,7 @@
             // Se le anota un acierto al jugador 1
             $this->assertEquals(1, $juego->aciertos[0]);
         }
+
         public function testEncuentraUnaParejaJugador2(){
             $juego = new Juego(crearValoresCartasEjemplo(), 2);
             $juego->cartas = crearValoresCartasColocadasEjemplo();
@@ -65,6 +70,7 @@
             $this->assertEquals(0, $juego->aciertos[0]);
             $this->assertEquals(1, $juego->aciertos[1]);
         }
+
         private function assertJuegoBienInicializado (Juego $juego)
         {
             $this->assertEquals(0, count($juego->encontradas));
