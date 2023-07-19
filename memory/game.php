@@ -55,6 +55,11 @@
         }
 
         public function pasarTurno() {
+            foreach($this->encontradas_este_turno as $i){
+                $this->encontradas[] = $i;
+            }
+            $this->encontradas_este_turno = array();
+            $this->intento_actual = array();
             if ($this->num_jugadores == 2){
                 if ($this->jugador_actual == 0){
                     $this->jugador_actual = 1;
@@ -62,10 +67,6 @@
                     $this->jugador_actual = 0;
                 }
             }
-            foreach($this->encontradas_este_turno as $i){
-                $this->encontradas[] = $i;
-            }
-            $this->encontradas_este_turno = array();
             if ($this->jugador_actual == 0) {
                 $this->turno++;
             }

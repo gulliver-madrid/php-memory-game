@@ -28,7 +28,6 @@
     }
 
     if (isset($_GET['ocultar'])){
-        $juego->intento_actual = array();
         $juego->pasarTurno();
     }
 
