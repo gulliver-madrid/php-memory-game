@@ -88,3 +88,19 @@ button:hover {
     flex-direction: row-reverse;
     padding: 20px 0px;
 }
+
+.aciertos {
+    border: 2px solid #222222;
+    background-color: #bbbbbb;
+    color: #222222;
+    padding: 0px 12px;
+}
+
+.aciertos-num {
+    font-size: xx-large;
+    text-align: center;
+}
+
+.selected {
+    border: 4px solid yellow;
+}

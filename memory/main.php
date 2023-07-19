@@ -138,8 +138,16 @@
             <?php if ($juego->num_jugadores == 1): ?>
                 <p>Aciertos: <?= $aciertos[0] ?></p>
             <?php else: ?>
-                <p>Aciertos jugador 1: <?= $aciertos[0] ?></p>
-                <p>Aciertos jugador 2: <?= $aciertos[1] ?></p>
+                <div class="hbox">
+                    <div class="aciertos <?php if ($juego->jugador_actual==0) echo "selected" ?>">
+                        <p>Jugador 1</p>
+                        <p class="aciertos-num"><?= $aciertos[0] ?></p>
+                    </div>
+                    <div class="aciertos <?php if ($juego->jugador_actual==1) echo "selected" ?>">
+                        <p>Jugador 2</p>
+                        <p class="aciertos-num"><?= $aciertos[1] ?></p>
+                    </div>
+                </div>
             <?php endif; ?>
 
             <?php if ($juego->intentoRealizado()):
