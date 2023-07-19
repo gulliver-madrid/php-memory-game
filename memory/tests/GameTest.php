@@ -13,6 +13,7 @@
             $juego = new Juego(crearValoresCartasEjemplo(), 1);
             $this->assertJuegoBienInicializado($juego);
             $this->assertEquals(1, count($juego->aciertos));
+            $this->assertEquals(6, count($juego->cartas));
         }
         public function testGameTwoPlayers()
         {

@@ -42,8 +42,7 @@
         if ($image_files == false){
             $image_files = []; // TODO: generar error
         }
-        $cartas = array_merge($image_files, $image_files);
-        $juego = new Juego($cartas, $num_jugadores);
+        $juego = new Juego($image_files, $num_jugadores);
         return $juego;
     }
 

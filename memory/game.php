@@ -9,9 +9,9 @@
         public $jugador_actual;
         public $num_jugadores;
 
-        public function __construct(array $cartas, int $num_jugadores) {
+        public function __construct(array $cartas_unicas, int $num_jugadores) {
             // Cartas del juego
-            $this->cartas = $cartas;
+            $this->cartas = array_merge($cartas_unicas, $cartas_unicas);
             // Barajar las cartas
             shuffle($this->cartas);
             $this->intento_actual = array();
