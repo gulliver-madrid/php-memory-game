@@ -182,19 +182,15 @@
 
         <div class="info">
             <?php displayInfo($juego); ?>
-            <div>
+            <div class="boton-reiniciar-container">
                 <?php // Boton para reiniciar el juego en cualquier momento ?>
-                <p style="text-align: right;">
-                    <small>
-                        <button
-                            class="boton-reiniciar"
-                            onclick="location.href='index.php?restart=true'"
-                            type=button
-                        >
-                            Reiniciar juego
-                        </button>
-                    </small>
-                </p>
+                <button
+                    class="boton-reiniciar"
+                    onclick="location.href='index.php?restart=true'"
+                    type=button
+                >
+                    Reiniciar juego
+                </button>
             </div>
         </div>
     </div>

@@ -72,7 +72,6 @@ button:hover {
 .info {
     padding-left: 60px;
     padding-right: 20px;
-    /* background-color: #222222; */
     color: #bbbbbb;
     min-width: 500px;
     display: flex;
@@ -82,4 +81,10 @@ button:hover {
 
 .descubierta {
     background-color: #f2f2f2;
+}
+
+.boton-reiniciar-container {
+    display: flex;
+    flex-direction: row-reverse;
+    padding: 20px 0px;
 }
