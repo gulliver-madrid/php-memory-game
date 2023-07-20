@@ -1,7 +1,7 @@
 <?php
 
+    require_once "app.php";
     require_once "fileManager.php";
-    require_once "game.php";
     require_once "helpers.php";
 
     $debug = false;
@@ -13,13 +13,15 @@
     }
 
     // Verificar si se debe reiniciar el juego
-    if (isset($_GET['restart']) || !isset($_SESSION['juego'])){
+    if (isset($_GET['restart']) || !isset($_SESSION['app'])){
         assert(isset($_GET['jugadores']));
         $num_jugadores = $_GET['jugadores'];
         $juego = startGame($num_jugadores);
-        $_SESSION['juego'] = $juego;
+        $app = new App($juego);
+        $_SESSION['app'] = $app;
     } else {
-        $juego = $_SESSION['juego'];
+        $app = $_SESSION['app'];
+        $juego = $app->juego;
     }
 
     // Obtener la carta seleccionada
@@ -42,7 +44,7 @@
             $image_files = []; // TODO: generar error
         }
         $image_files = array_slice($image_files, 0, NUMBER_OF_CARDS);
-        $juego = new Juego($image_files, $num_jugadores, use_db: true);
+        $juego = new Juego($image_files, $num_jugadores);
         return $juego;
     }
 
@@ -99,11 +101,12 @@
 
 
     // Muestra la informacion de final de juego y el boton de volver a jugar
-    function displayEndGame(Juego $juego){
+    function displayEndGame(App $app){
+        $juego = $app->juego;
         if (!$juego->completado())
             return;
 
-        $juego->registrarPartida();
+        $app->registrarPartida();
 
         $texto_fin_juego = ($juego->num_jugadores == 1) ?
              "¡Felicidades! Has ganado el juego en $juego->turno intentos." :
@@ -125,7 +128,8 @@
     }
 
     // Muestra informacion sobre el juego
-    function displayInfo(Juego $juego){
+    function displayInfo(App $app){
+        $juego = $app->juego;
     ?>
         <div>
             <?php if ($juego->num_jugadores == 2): ?>
@@ -163,7 +167,7 @@
                 </p>
             <?php endif; ?>
 
-            <?php displayEndGame($juego); ?>
+            <?php displayEndGame($app); ?>
         </div>
     <?php
     }
@@ -190,7 +194,7 @@
         </div>
 
         <div class="info">
-            <?php displayInfo($juego); ?>
+            <?php displayInfo($app); ?>
             <div class="boton-reiniciar-container">
                 <?php // Boton para reiniciar el juego en cualquier momento ?>
                 <button
