@@ -2,6 +2,7 @@
 
     require_once 'dmManagement.php';
     require_once "game.php";
+    require_once "timeManagement.php";
 
     class App {
 
@@ -9,11 +10,14 @@
 
             $this->juego = $juego;
             $this->db_manager = new DbManager();
-            $this->timing = array("start"=>getCurrentTimeAsString());
+            $this->time_manager = new TimeManager();
+            $now = $this->time_manager->getCurrentTimeAsString();
+            $this->timing = array("start"=>$now);
         }
 
         public function registrarPartida(): void {
-            $id_partida = $this->db_manager->registrar_partida($this->timing['start'], getCurrentTimeAsString(), $this->juego->num_jugadores);
+            $now = $this->time_manager->getCurrentTimeAsString();
+            $id_partida = $this->db_manager->registrar_partida($this->timing['start'], $now, $this->juego->num_jugadores);
             if ($id_partida === false){
                 echo "No se pudo acceder a la base de datos correctamente";
             } else {
