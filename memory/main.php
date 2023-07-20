@@ -103,6 +103,8 @@
         if (!$juego->completado())
             return;
 
+        $juego->registrarPartida();
+
         $texto_fin_juego = ($juego->num_jugadores == 1) ?
              "¡Felicidades! Has ganado el juego en $juego->turno intentos." :
              "Juego finalizado";

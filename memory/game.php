@@ -1,4 +1,6 @@
 <?php
+    require_once 'dmManagement.php';
+
     class Juego {
         public $cartas;
         public $intento_actual;
@@ -21,6 +23,7 @@
             $this->aciertos = array_fill(0, $num_jugadores, 0);
             $this->jugador_actual = 0;
             $this->num_jugadores = $num_jugadores;
+            $this->timing = array("start"=>getCurrentTimeAsString());
         }
 
         public function registrarCarta(int $indice_carta)
@@ -87,6 +90,14 @@
         }
         public function completado(): bool {
             return array_sum($this->aciertos) == count($this->cartas)/2;
+        }
+        public function registrarPartida(): void {
+            $id_partida = registrar_partida($this->timing['start'], getCurrentTimeAsString(), $this->num_jugadores);
+            if ($id_partida === false){
+                echo "No se pudo acceder a la base de datos correctamente";
+            } else {
+                echo "Partida registrada con el ID: " . $id_partida;
+            }
         }
     }
 
