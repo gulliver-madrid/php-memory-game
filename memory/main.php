@@ -169,11 +169,11 @@
 <html>
 <head>
     <title>Juego de Memoria</title>
-    <link rel="stylesheet" type="text/css" href="main.css">
+    <link rel="stylesheet" type="text/css" href="styles/main.css">
     <?php if ($_SESSION['tema'] == 'claro'): ?>
-        <link rel="stylesheet" type="text/css" href="main-light.css">
+        <link rel="stylesheet" type="text/css" href="styles/main-light.css">
     <?php else: ?>
-        <link rel="stylesheet" type="text/css" href="main-dark.css">
+        <link rel="stylesheet" type="text/css" href="styles/main-dark.css">
     <?php endif ?>
 </head>
 <body>

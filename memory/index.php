@@ -17,11 +17,11 @@
 <html>
 <head>
     <title>Juego de Memoria</title>
-    <link rel="stylesheet" type="text/css" href="index.css">
+    <link rel="stylesheet" type="text/css" href="styles/index.css">
     <?php if ($_SESSION['tema'] == 'claro'): ?>
-        <link rel="stylesheet" type="text/css" href="light.css">
+        <link rel="stylesheet" type="text/css" href="styles/light.css">
     <?php else: ?>
-        <link rel="stylesheet" type="text/css" href="dark.css">
+        <link rel="stylesheet" type="text/css" href="styles/dark.css">
     <?php endif ?>
 </head>
 <body>
