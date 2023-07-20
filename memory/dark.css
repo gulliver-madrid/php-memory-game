@@ -1,0 +1,17 @@
+body {
+    background-color: #333;
+    color: white !important;
+}
+
+.title {
+    color: #ddd;
+}
+
+.start-button {
+    background-color: #008CBA;
+    color: white;
+}
+
+.start-button:hover {
+    background-color: #007B9A;
+}

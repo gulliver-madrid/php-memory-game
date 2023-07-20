@@ -1,9 +1,12 @@
 body {
+    height: 100vh;
+    background-color: #f8f8f8;
+}
+
+.hbox {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    background-color: #f8f8f8;
 }
 
 .container {
@@ -16,7 +19,7 @@ body {
 }
 
 .start-button {
-    margin-top: 20px;
+    margin: 20px 4px;
     padding: 10px 20px;
     font-size: 1.2em;
     background-color: #008CBA;

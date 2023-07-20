@@ -1,0 +1,51 @@
+body {
+    background-color: rgb(37, 37, 37);
+}
+
+h1 {
+    color: rgb(201, 201, 3);
+}
+
+button {
+    background-color: black;
+    color: rgb(201, 201, 3);
+}
+
+button:hover {
+    background-color: #222222;
+}
+
+.board {
+    background-color: black;
+}
+
+.carta {
+    background-color: rgb(28, 28, 28);
+}
+
+.clicable:hover {
+    background-color: rgb(59, 59, 59);
+}
+
+.encontrada {
+    background-color: green;
+}
+
+.info {
+    color: #bbbbbb;
+}
+
+.descubierta {
+    background-color: #f2f2f2;
+}
+
+.aciertos {
+    border: 2px solid #222222;
+    background-color: #bbbbbb;
+    color: #222222;
+}
+
+
+.selected {
+    border: 4px solid yellow;
+}

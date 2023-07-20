@@ -13,7 +13,6 @@
 
     // Verificar si se debe reiniciar el juego
     if (isset($_GET['restart']) || !isset($_SESSION['juego'])){
-        clearSession();
         assert(isset($_GET['jugadores']));
         $num_jugadores = $_GET['jugadores'];
         $juego = startGame($num_jugadores);
@@ -164,7 +163,6 @@
         </div>
     <?php
     }
-
 ?>
 
 <!DOCTYPE html>
@@ -172,6 +170,11 @@
 <head>
     <title>Juego de Memoria</title>
     <link rel="stylesheet" type="text/css" href="main.css">
+    <?php if ($_SESSION['tema'] == 'claro'): ?>
+        <link rel="stylesheet" type="text/css" href="main-light.css">
+    <?php else: ?>
+        <link rel="stylesheet" type="text/css" href="main-dark.css">
+    <?php endif ?>
 </head>
 <body>
     <h1>Juego de Memoria</h1>
