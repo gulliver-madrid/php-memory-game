@@ -11,7 +11,7 @@
         public $jugador_actual;
         public $num_jugadores;
 
-        public function __construct(array $cartas_unicas, int $num_jugadores) {
+        public function __construct(array $cartas_unicas, int $num_jugadores, bool $use_db=false) {
             // Cartas del juego
             $this->cartas = array_merge($cartas_unicas, $cartas_unicas);
             // Barajar las cartas
@@ -23,7 +23,10 @@
             $this->aciertos = array_fill(0, $num_jugadores, 0);
             $this->jugador_actual = 0;
             $this->num_jugadores = $num_jugadores;
-            $this->timing = array("start"=>getCurrentTimeAsString());
+            if ($use_db) {
+                $this->db_manager = new DbManager();
+                $this->timing = array("start"=>getCurrentTimeAsString());
+            }
         }
 
         public function registrarCarta(int $indice_carta)
@@ -92,7 +95,7 @@
             return array_sum($this->aciertos) == count($this->cartas)/2;
         }
         public function registrarPartida(): void {
-            $id_partida = registrar_partida($this->timing['start'], getCurrentTimeAsString(), $this->num_jugadores);
+            $id_partida = $this->db_manager->registrar_partida($this->timing['start'], getCurrentTimeAsString(), $this->num_jugadores);
             if ($id_partida === false){
                 echo "No se pudo acceder a la base de datos correctamente";
             } else {

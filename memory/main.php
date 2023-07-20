@@ -42,7 +42,7 @@
             $image_files = []; // TODO: generar error
         }
         $image_files = array_slice($image_files, 0, NUMBER_OF_CARDS);
-        $juego = new Juego($image_files, $num_jugadores);
+        $juego = new Juego($image_files, $num_jugadores, use_db: true);
         return $juego;
     }
 
