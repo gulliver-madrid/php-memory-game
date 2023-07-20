@@ -5,6 +5,7 @@
     require_once "helpers.php";
 
     $debug = false;
+    define('NUMBER_OF_CARDS', 2);
 
     // Iniciar la sesion
     if (!isset($_SESSION)) {
@@ -40,6 +41,7 @@
         if ($image_files == false){
             $image_files = []; // TODO: generar error
         }
+        $image_files = array_slice($image_files, 0, NUMBER_OF_CARDS);
         $juego = new Juego($image_files, $num_jugadores);
         return $juego;
     }
