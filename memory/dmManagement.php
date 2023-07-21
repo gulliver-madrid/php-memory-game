@@ -7,7 +7,7 @@
 
     class DbManager {
 
-        private function get_db_connection_with_table_partidas(){
+        private function get_db_connection_with_table_partidas(): PDO | false{
             try {
                 // Crea la conexión a la base de datos
                 $db = new PDO('sqlite:partidas.db');
@@ -25,7 +25,7 @@
             }
         }
 
-        public function registrar_partida(string $inicio, string $fin, int $num_jugadores): int | false {
+        public function registrar_partida(string $inicio, string $fin, int $num_jugadores): string | false {
             $db = $this->get_db_connection_with_table_partidas();
             if ($db === false) {
                 return false;

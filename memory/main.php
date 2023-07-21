@@ -52,18 +52,18 @@
         return $juego;
     }
 
-    function debug_output(Juego $juego) {
+    function debug_output(Juego $juego): void {
         echo "<p>Cartas barajadas: ".arrayToString($juego->cartas).'</p>';
         echo "<p>intento_actual: ". arrayToString($juego->intento_actual)."</p>";
         echo "<p>encontradas: ". arrayToString($juego->encontradas)."</p>";
     }
 
-    function displayCardImage(string $src){
+    function displayCardImage(string $src): string {
         return "<img src=\"{$src}\" width=\"80\" height=\"80\">";
     }
 
     // Crea una tarjeta en el tablero
-    function displaySquare(Juego $juego, int $i) {
+    function displaySquare(Juego $juego, int $i): void {
         $cartas = $juego->cartas;
         $valor_carta = $cartas[$i];
         $src = "images/" . $valor_carta;
@@ -87,7 +87,7 @@
         }
     }
 
-    function displayBoard(Juego $juego){
+    function displayBoard(Juego $juego): void {
     ?>
         <div class="board">
             <?php
@@ -102,7 +102,7 @@
 
 
     // Muestra la informacion de final de juego y el boton de volver a jugar
-    function displayEndGame(App $app){
+    function displayEndGame(App $app): void {
         $juego = $app->juego;
         if (!$juego->completado())
             return;
@@ -129,7 +129,7 @@
     }
 
     // Muestra informacion sobre el juego
-    function displayInfo(App $app){
+    function displayInfo(App $app): void {
         $juego = $app->juego;
     ?>
         <div>

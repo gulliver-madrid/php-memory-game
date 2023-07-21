@@ -2,15 +2,23 @@
     namespace JuegoMemoria\Juego;
 
     class Juego {
-        public $aciertos;
-        public $cartas;
-        public $encontradas;
-        public $encontradas_este_turno;
-        public $intento_actual;
-        public $jugador_actual;
-        public $num_jugadores;
-        public $turno;
+        /** @var array<int> */
+        public array $aciertos;
+        /** @var array<string> */
+        public array $cartas;
+        /** @var array<int> */
+        public array $encontradas;
+        /** @var array<int> */
+        public array $encontradas_este_turno;
+        /** @var array<int> */
+        public array $intento_actual;
+        public int $jugador_actual;
+        public int $num_jugadores;
+        public int $turno;
 
+        /**
+         * @param array<string> $cartas_unicas
+         */
         public function __construct(array $cartas_unicas, int $num_jugadores) {
             // Cartas del juego
             $this->cartas = array_merge($cartas_unicas, $cartas_unicas);
@@ -25,7 +33,7 @@
             $this->num_jugadores = $num_jugadores;
         }
 
-        public function registrarCarta(int $indice_carta)
+        public function registrarCarta(int $indice_carta): void
         {
             assert(!$this->esCartaYaEncontrada($indice_carta));
             if (count($this->intento_actual) >= 2){
@@ -43,7 +51,7 @@
             }
         }
 
-        public function evaluarTurno() {
+        public function evaluarTurno(): void {
             $cartas = $this->cartas;
             assert($this->intentoRealizado());
             [$primera, $segunda] = $this->intento_actual;
@@ -56,7 +64,7 @@
             }
         }
 
-        public function pasarTurno() {
+        public function pasarTurno(): void {
             foreach($this->encontradas_este_turno as $i){
                 $this->encontradas[] = $i;
             }

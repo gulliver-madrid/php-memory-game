@@ -9,6 +9,7 @@
         public Juego $juego;
         public DbManager $db_manager;
         public TimeManager $time_manager;
+        /** @var array<string> */
         public array $timing;
 
         public function __construct(Juego $juego) {

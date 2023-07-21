@@ -3,16 +3,19 @@
     use PHPUnit\Framework\TestCase;
     use JuegoMemoria\Juego\Juego;
 
+    /** @return array<string> */
     function crearValoresCartasEjemplo(): array {
         return ['a', 'b', 'c'];
     }
+
+    /** @return array<string> */
     function crearValoresCartasColocadasEjemplo(): array {
         return array_merge(crearValoresCartasEjemplo(), crearValoresCartasEjemplo());
     }
 
     class GameTest extends TestCase
     {
-        public function testNewGameOnePlayer()
+        public function testNewGameOnePlayer(): void
         {
             $juego = new Juego(crearValoresCartasEjemplo(), 1);
             $this->assertJuegoBienInicializado($juego);
@@ -20,27 +23,27 @@
             $this->assertEquals(6, count($juego->cartas));
         }
 
-        public function testNewGameTwoPlayers()
+        public function testNewGameTwoPlayers(): void
         {
             $juego = new Juego(crearValoresCartasEjemplo(), 2);
             $this->assertJuegoBienInicializado($juego);
             $this->assertEquals(2, count($juego->aciertos));
         }
 
-        public function testRegistrarCarta(){
+        public function testRegistrarCarta(): void {
             $juego = new Juego(crearValoresCartasEjemplo(), 1);
             $juego->registrarCarta(0);
             $this->assertEquals(1, count($juego->intento_actual));
         }
 
-        public function testRegistrarCartaDosVecesNoCambiaNada(){
+        public function testRegistrarCartaDosVecesNoCambiaNada(): void {
             $juego = new Juego(crearValoresCartasEjemplo(), 1);
             $juego->registrarCarta(0);
             $juego->registrarCarta(0);
             $this->assertEquals(1, count($juego->intento_actual));
         }
 
-        public function testNoEncuentraUnaPareja(){
+        public function testNoEncuentraUnaPareja(): void {
             $juego = new Juego(crearValoresCartasEjemplo(), 1);
             $juego->cartas = crearValoresCartasColocadasEjemplo();
             $juego->registrarCarta(0);
@@ -53,7 +56,7 @@
             $this->assertEquals(0, $juego->aciertos[0]);
         }
 
-        public function testEncuentraUnaPareja(){
+        public function testEncuentraUnaPareja(): void {
             $juego = new Juego(crearValoresCartasEjemplo(), 1);
             $juego->cartas = crearValoresCartasColocadasEjemplo();
             $juego->registrarCarta(0);
@@ -66,7 +69,7 @@
             $this->assertEquals(1, $juego->aciertos[0]);
         }
 
-        public function testEncuentraUnaParejaJugador2(){
+        public function testEncuentraUnaParejaJugador2(): void {
             $juego = new Juego(crearValoresCartasEjemplo(), 2);
             $juego->cartas = crearValoresCartasColocadasEjemplo();
             // El jugador 1 falla
@@ -85,7 +88,7 @@
             $this->assertEquals(1, $juego->aciertos[1]);
         }
 
-        private function assertJuegoBienInicializado (Juego $juego)
+        private function assertJuegoBienInicializado (Juego $juego): void
         {
             $this->assertEquals(0, count($juego->encontradas));
             $this->assertEquals(0, count($juego->encontradas_este_turno));

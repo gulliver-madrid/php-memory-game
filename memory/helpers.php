@@ -1,5 +1,8 @@
 <?php
-    function arrayToString(array $array) {
+    /**
+     * @param array<mixed> $array
+     */
+    function arrayToString(array $array): string {
         $str = "[";
         foreach ($array as $item) {
             if (is_array($item)){
@@ -12,7 +15,7 @@
         return $str;
     }
 
-    function clearSession(){
+    function clearSession(): void {
         // Limpia todas las variables de sesión
         session_unset();
         // Destruye la sesión
@@ -21,6 +24,6 @@
         session_start();
     }
 
-    function consoleLog(string $text){
+    function consoleLog(string $text): void {
         echo "<script>console.log('" . $text . "')</script>";
     }
