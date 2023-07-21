@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @return array<string>
+ */
 function obtenerArchivos(string $directorio): array|false {
     // Comprobar si el directorio existe
     if (is_dir($directorio)){

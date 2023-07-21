@@ -1,4 +1,9 @@
 <?php
+    namespace JuegoMemoria\Extras;
+
+    use PDO;
+    use PDOException;
+
     define('QUERY_TABLE_CREATION', "CREATE TABLE IF NOT EXISTS Partidas (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         inicio TIMESTAMP NOT NULL,

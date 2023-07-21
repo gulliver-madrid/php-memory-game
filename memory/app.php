@@ -1,9 +1,11 @@
 <?php
-
+    namespace JuegoMemoria\App;
     require_once 'dmManagement.php';
     require_once "game.php";
     require_once "timeManagement.php";
     use JuegoMemoria\Juego\Juego;
+    use JuegoMemoria\Extras\DbManager;
+    use JuegoMemoria\Extras\TimeManager;
 
     class App {
         public Juego $juego;

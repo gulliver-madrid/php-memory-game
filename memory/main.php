@@ -2,8 +2,8 @@
 
     require_once "app.php";
     require_once "fileManager.php";
-    require_once "helpers.php";
 
+    use JuegoMemoria\App\App;
     use JuegoMemoria\Juego\Juego;
     use JuegoMemoria\Juego\DisplayValue;
     use function JuegoMemoria\Juego\getDisplayValue;
