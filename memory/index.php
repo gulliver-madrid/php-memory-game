@@ -11,6 +11,27 @@
     if (!isset($_SESSION['tema'])){
         $_SESSION['tema'] = 'oscuro';
     }
+
+    if ($_SERVER["REQUEST_METHOD"] === "POST") {
+        // Obtener el numero de tarjetas ingresado por el usuario
+        $num_tarjetas = filter_input(
+            INPUT_POST,
+            'num_tarjetas',
+            FILTER_VALIDATE_INT,
+            ['options' => ['min_range' => 2, 'max_range' => 8]]
+        );
+
+        if ($num_tarjetas !== false) {
+            // El numero de tarjetas es valido (esta entre 2 y 8)
+            $_SESSION['num_tarjetas'] = $num_tarjetas;
+        } else {
+            // El numero de tarjetas no es valido
+            echo "El número de tarjetas debe estar entre 2 y 8. Por favor, vuelve a intentarlo.";
+        }
+    } else {
+        $num_tarjetas = isset($_SESSION['num_tarjetas'])?$_SESSION['num_tarjetas']:4;
+    }
+
 ?>
 
 <!DOCTYPE html>
@@ -49,5 +70,12 @@
             <input type="submit" value="Aplicar">
         </form>
     </div>
+    <hr>
+    <h2>Seleccionar número de tarjetas</h2>
+    <form method="post">
+        <label for="num_tarjetas">Número de tarjetas (entre 2 y 8):</label>
+        <input type="number" name="num_tarjetas" id="num_tarjetas" min="2" max="8" value="<?= $num_tarjetas ?>" required>
+        <input type="submit" value="Aplicar">
+    </form>
 </body>
 </html>

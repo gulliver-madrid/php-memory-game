@@ -20,7 +20,10 @@
     if (isset($_GET['restart']) || !isset($_SESSION['app'])){
         assert(isset($_GET['jugadores']));
         $num_jugadores = $_GET['jugadores'];
-        $juego = startGame($num_jugadores);
+        $num_tarjetas = isset($_SESSION['num_tarjetas'])
+            ? $_SESSION['num_tarjetas']
+            : NUMBER_OF_CARDS;
+        $juego = startGame($num_jugadores, $num_tarjetas);
         $app = new App($juego);
         $_SESSION['app'] = $app;
     } else {
@@ -41,13 +44,13 @@
         debug_output($juego);
     }
 
-    function startGame(int $num_jugadores): Juego {
+    function startGame(int $num_jugadores, int $num_tarjetas=NUMBER_OF_CARDS): Juego {
         assert($num_jugadores == 1 || $num_jugadores == 2);
         $image_files = obtenerArchivos("images");
         if ($image_files == false){
             $image_files = []; // TODO: generar error
         }
-        $image_files = array_slice($image_files, 0, NUMBER_OF_CARDS);
+        $image_files = array_slice($image_files, 0, $num_tarjetas);
         $juego = new Juego($image_files, $num_jugadores);
         return $juego;
     }
