@@ -6,6 +6,10 @@
     use JuegoMemoria\Juego\Juego;
 
     class App {
+        public Juego $juego;
+        public DbManager $db_manager;
+        public TimeManager $time_manager;
+        public array $timing;
 
         public function __construct(Juego $juego) {
 

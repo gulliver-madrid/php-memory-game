@@ -37,7 +37,7 @@
         $juego->pasarTurno();
     }
 
-    if ($debug){
+    if ($debug){  // @phpstan-ignore-line
         debug_output($juego);
     }
 
@@ -59,10 +59,7 @@
     }
 
     function displayCardImage(string $src){
-        return "<img src=\"{$src}\" width=\"80\" height=\"80\">"
-    ?>
-
-    <?php
+        return "<img src=\"{$src}\" width=\"80\" height=\"80\">";
     }
 
     // Crea una tarjeta en el tablero

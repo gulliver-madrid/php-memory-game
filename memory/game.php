@@ -2,14 +2,14 @@
     namespace JuegoMemoria\Juego;
 
     class Juego {
+        public $aciertos;
         public $cartas;
-        public $intento_actual;
         public $encontradas;
         public $encontradas_este_turno;
-        public $turno;
-        public $aciertos;
+        public $intento_actual;
         public $jugador_actual;
         public $num_jugadores;
+        public $turno;
 
         public function __construct(array $cartas_unicas, int $num_jugadores) {
             // Cartas del juego

@@ -25,7 +25,7 @@
             }
         }
 
-        public function registrar_partida(string $inicio, string $fin, int $num_jugadores): int {
+        public function registrar_partida(string $inicio, string $fin, int $num_jugadores): int | false {
             $db = $this->get_db_connection_with_table_partidas();
             if ($db === false) {
                 return false;
