@@ -3,6 +3,7 @@
     require_once 'dmManagement.php';
     require_once "game.php";
     require_once "timeManagement.php";
+    use JuegoMemoria\Juego\Juego;
 
     class App {
 

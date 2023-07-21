@@ -4,8 +4,12 @@
     require_once "fileManager.php";
     require_once "helpers.php";
 
+    use JuegoMemoria\Juego\Juego;
+    use JuegoMemoria\Juego\DisplayValue;
+    use function JuegoMemoria\Juego\getDisplayValue;
+
     $debug = false;
-    define('NUMBER_OF_CARDS', 2);
+    const NUMBER_OF_CARDS = 4;
 
     // Iniciar la sesion
     if (!isset($_SESSION)) {
@@ -37,7 +41,7 @@
         debug_output($juego);
     }
 
-    function startGame(int $num_jugadores){
+    function startGame(int $num_jugadores): Juego {
         assert($num_jugadores == 1 || $num_jugadores == 2);
         $image_files = obtenerArchivos("images");
         if ($image_files == false){

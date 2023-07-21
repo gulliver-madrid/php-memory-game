@@ -1,4 +1,5 @@
 <?php
+    namespace JuegoMemoria\Juego;
 
     class Juego {
         public $cartas;

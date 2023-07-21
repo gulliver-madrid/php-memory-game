@@ -1,6 +1,7 @@
 <?php
-    use PHPUnit\Framework\TestCase;
     require_once "memory/game.php";
+    use PHPUnit\Framework\TestCase;
+    use JuegoMemoria\Juego\Juego;
 
     function crearValoresCartasEjemplo(): array {
         return ['a', 'b', 'c'];
