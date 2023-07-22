@@ -1,12 +1,14 @@
 <?php
-    function indexView(int $num_tarjetas): void {
+    const MAIN_VIEW_PATH = "main.php";
+
+    function indexView(int $num_tarjetas, string $tema): void {
         ?>
         <!DOCTYPE html>
         <html>
             <head>
                 <title>Juego de Memoria</title>
                 <link rel="stylesheet" type="text/css" href="styles/index.css">
-                <?php if ($_SESSION['tema'] == 'claro'): ?>
+                <?php if ($tema == 'claro'): ?>
                     <link rel="stylesheet" type="text/css" href="styles/light.css">
                 <?php else: ?>
                     <link rel="stylesheet" type="text/css" href="styles/dark.css">
@@ -16,20 +18,20 @@
                 <div class="container">
                     <h2 class="title">Bienvenido al Juego de Memoria</h2>
                     <div class="hbox">
-                        <a href="main.php?restart=true&jugadores=1" class="start-button">Un jugador</a>
-                        <a href="main.php?restart=true&jugadores=2" class="start-button">Dos jugadores</a>
+                        <a href=<?php echo MAIN_VIEW_PATH . '?restart=true&jugadores=1'; ?> class="start-button">Un jugador</a>
+                        <a href=<?php echo MAIN_VIEW_PATH . '?restart=true&jugadores=2'; ?> class="start-button">Dos jugadores</a>
                     </div>
                 </div>
                 <div class="container">
                     <form method="post">
                         <label>
                             <input type="radio" name="tema" value="claro"
-                            <?php echo (!isset($_SESSION['tema']) || $_SESSION['tema'] == 'claro') ? 'checked' : ''; ?>>
+                            <?php echo ($tema == 'claro') ? 'checked' : ''; ?>>
                             Tema Claro
                         </label>
                         <label>
                             <input type="radio" name="tema" value="oscuro"
-                            <?php echo (isset($_SESSION['tema']) && $_SESSION['tema'] == 'oscuro') ? 'checked' : ''; ?>>
+                            <?php echo ($tema == 'oscuro') ? 'checked' : ''; ?>>
                             Tema Oscuro
                         </label>
                         <br/>

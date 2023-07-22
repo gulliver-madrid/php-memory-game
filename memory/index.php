@@ -3,6 +3,7 @@
     require_once 'views/indexView.php';
 
     session_start();
+
     if (isset($_POST['restart'])){
         $_SESSION['app'] = null;
     }
@@ -34,6 +35,8 @@
         $_SESSION['num_tarjetas'] = 4;
     }
     $num_tarjetas = $_SESSION['num_tarjetas'];
+    $tema = $_SESSION['tema'];
+    assert(in_array($tema, ['claro', 'oscuro']));
 
-    indexView($num_tarjetas);
+    indexView($num_tarjetas, $tema);
 ?>
