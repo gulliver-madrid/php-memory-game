@@ -93,14 +93,12 @@
                 <p>Aciertos: <?= $aciertos[0] ?></p>
             <?php else: ?>
                 <div class="hbox">
-                    <div class="aciertos <?php if ($juego->jugador_actual==0) echo "selected" ?>">
-                        <p>Jugador 1</p>
-                        <p class="aciertos-num"><?= $aciertos[0] ?></p>
-                    </div>
-                    <div class="aciertos <?php if ($juego->jugador_actual==1) echo "selected" ?>">
-                        <p>Jugador 2</p>
-                        <p class="aciertos-num"><?= $aciertos[1] ?></p>
-                    </div>
+                    <?php foreach ([0, 1] as $indice_jugador) : ?>
+                        <div class="aciertos <?php if ($juego->jugador_actual == $indice_jugador) echo "selected"; ?>">
+                            <p>Jugador <?php echo $indice_jugador + 1; ?></p>
+                            <p class="aciertos-num"><?= $aciertos[$indice_jugador] ?></p>
+                        </div>
+                    <?php endforeach; ?>
                 </div>
             <?php endif; ?>
 
