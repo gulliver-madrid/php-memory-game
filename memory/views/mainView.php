@@ -2,6 +2,7 @@
     require_once "app.php";
 
     use JuegoMemoria\App\App;
+    use JuegoMemoria\Juego\Juego;
     use JuegoMemoria\Juego\DisplayValue;
     use function JuegoMemoria\Juego\getDisplayValue;
 
@@ -76,6 +77,22 @@
         <?php
     }
 
+    /**
+     * @param array<int> $aciertos
+     */
+    function displayScores(Juego $juego, array $aciertos): void {
+    ?>
+        <div class="hbox">
+            <?php foreach ([0, 1] as $indice_jugador) : ?>
+                <div class="aciertos <?php if ($juego->jugador_actual == $indice_jugador) echo "selected"; ?>">
+                    <p>Jugador <?php echo $indice_jugador + 1; ?></p>
+                    <p class="aciertos-num"><?= $aciertos[$indice_jugador] ?></p>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    <?php
+    }
+
     // Muestra informacion sobre el juego
     function displayInfo(App $app): void {
         $juego = $app->juego;
@@ -91,16 +108,9 @@
             <?php $aciertos = $juego->aciertos; ?>
             <?php if ($juego->num_jugadores == 1): ?>
                 <p>Aciertos: <?= $aciertos[0] ?></p>
-            <?php else: ?>
-                <div class="hbox">
-                    <?php foreach ([0, 1] as $indice_jugador) : ?>
-                        <div class="aciertos <?php if ($juego->jugador_actual == $indice_jugador) echo "selected"; ?>">
-                            <p>Jugador <?php echo $indice_jugador + 1; ?></p>
-                            <p class="aciertos-num"><?= $aciertos[$indice_jugador] ?></p>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
-            <?php endif; ?>
+            <?php else:
+                displayScores($juego, $aciertos);
+            endif; ?>
 
             <?php if ($juego->intentoRealizado()):
                 $button_text = ($juego->num_jugadores == 2)
