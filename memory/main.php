@@ -3,11 +3,12 @@
     require_once "app.php";
     require_once "defaults.php";
     require_once "fileManager.php";
+    require_once "views/mainView.php";
 
     use JuegoMemoria\App\App;
     use JuegoMemoria\Juego\Juego;
-    use JuegoMemoria\Juego\DisplayValue;
-    use function JuegoMemoria\Juego\getDisplayValue;
+
+
 
     $debug = false;
 
@@ -65,155 +66,6 @@
         echo "<p>encontradas: ". arrayToString($juego->encontradas)."</p>";
     }
 
-    function displayCardImage(string $src): string {
-        return "<img src=\"{$src}\" width=\"80\" height=\"80\">";
-    }
 
-    // Crea una tarjeta en el tablero
-    function displaySquare(App $app, int $i): void {
-        $juego = $app->juego;
-        $cartas = $juego->cartas;
-        $imageName = $cartas[$i];
-        $src = $app->getImagePath($imageName);
-        switch (getDisplayValue($juego, $i)) {
-            case DisplayValue::Descubierta:
-                echo "<div class=\"carta descubierta\">" . displayCardImage($src) . "</div>";
-                break;
-            case DisplayValue::YaEncontrada:
-                echo "<div class=\"carta recogida\"></div>";
-                break;
-            case DisplayValue::EncontradaEsteTurno:
-                echo "<div class=\"carta encontrada\">" . displayCardImage($src) . "</div>";
-                break;
-            case DisplayValue::Clicable:
-                echo "<a href=\"?carta={$i}\"><div class=\"carta clicable\"></div></a>";
-                break;
-            case DisplayValue::NoClicable:
-                echo "<div class=\"carta\"></div>";
-                break;
-        }
-    }
-
-    function displayBoard(App $app): void {
-        $juego = $app->juego;
-    ?>
-        <div class="board">
-            <?php
-                $cartas = $juego->cartas;
-                for ($i = 0; $i < count($cartas); $i++):
-                    displaySquare($app, $i);
-                endfor;
-            ?>
-        </div>
-    <?php
-    }
-
-
-    // Muestra la informacion de final de juego y el boton de volver a jugar
-    function displayEndGame(App $app): void {
-        $juego = $app->juego;
-        if (!$juego->completado())
-            return;
-
-        $app->registrarPartida();
-
-        $texto_fin_juego = ($juego->num_jugadores == 1) ?
-             "¡Felicidades! Has ganado el juego en $juego->turno intentos." :
-             "Juego finalizado";
-        $handle_click_attr = (
-            "location.href='main.php?restart=true&jugadores=" .
-            $juego->num_jugadores .
-            "'"
-        )
-        ?>
-        <p><?= $texto_fin_juego ?></p>
-        <button
-            onclick=<?= $handle_click_attr ?>
-            type=button
-        >
-            Jugar de nuevo
-        </button>
-        <?php
-    }
-
-    // Muestra informacion sobre el juego
-    function displayInfo(App $app): void {
-        $juego = $app->juego;
-    ?>
-        <div>
-            <?php if ($juego->num_jugadores == 2): ?>
-                <p>Jugador actual: <?= $juego->jugador_actual + 1 ?></p>
-                <p>Turno: <?= $juego->turno ?></p>
-            <?php else: ?>
-                <p>Intento: <?= $juego->turno ?></p>
-            <?php endif; ?>
-
-            <?php $aciertos = $juego->aciertos; ?>
-            <?php if ($juego->num_jugadores == 1): ?>
-                <p>Aciertos: <?= $aciertos[0] ?></p>
-            <?php else: ?>
-                <div class="hbox">
-                    <div class="aciertos <?php if ($juego->jugador_actual==0) echo "selected" ?>">
-                        <p>Jugador 1</p>
-                        <p class="aciertos-num"><?= $aciertos[0] ?></p>
-                    </div>
-                    <div class="aciertos <?php if ($juego->jugador_actual==1) echo "selected" ?>">
-                        <p>Jugador 2</p>
-                        <p class="aciertos-num"><?= $aciertos[1] ?></p>
-                    </div>
-                </div>
-            <?php endif; ?>
-
-            <?php if ($juego->intentoRealizado()):
-                $button_text = ($juego->num_jugadores == 2)
-                    ? "Cambiar jugador"
-                    : "Ocultar cartas";
-                ?>
-                <p>
-                    <button onclick="location.href='?ocultar=true'">
-                        <?= $button_text ?>
-                    </button>
-                </p>
-            <?php endif; ?>
-
-            <?php displayEndGame($app); ?>
-        </div>
-    <?php
-    }
-?>
-
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Juego de Memoria</title>
-    <link rel="stylesheet" type="text/css" href="styles/main.css">
-    <?php if ($_SESSION['tema'] == 'claro'): ?>
-        <link rel="stylesheet" type="text/css" href="styles/main-light.css">
-    <?php else: ?>
-        <link rel="stylesheet" type="text/css" href="styles/main-dark.css">
-    <?php endif ?>
-</head>
-<body>
-    <h1>Juego de Memoria</h1>
-    <div class='hbox'>
-        <div>
-            <?php
-                displayBoard($app)
-            ?>
-        </div>
-
-        <div class="info">
-            <?php displayInfo($app); ?>
-            <div class="boton-reiniciar-container">
-                <?php // Boton para reiniciar el juego en cualquier momento ?>
-                <form action="index.php" method="post">
-                    <input type="hidden" name="restart" value="true">
-                    <button type="submit" class="boton-reiniciar">
-                        Reiniciar juego!
-                    </button>
-                </form>
-            </div>
-        </div>
-    </div>
-</body>
-</html>
+    $tema = $_SESSION['tema'];
+    mainView($app, $tema);
