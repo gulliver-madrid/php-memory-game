@@ -17,7 +17,7 @@
     }
 
     // Verificar si se debe reiniciar el juego
-    if (isset($_GET['restart']) || !isset($_SESSION['app'])){
+    if (isset($_GET['restart']) || !isset($_SESSION['app']) || $_SESSION['app'] == null){
         assert(isset($_GET['jugadores']));
         $num_jugadores = $_GET['jugadores'];
         $num_tarjetas = isset($_SESSION['num_tarjetas'])
@@ -201,13 +201,12 @@
             <?php displayInfo($app); ?>
             <div class="boton-reiniciar-container">
                 <?php // Boton para reiniciar el juego en cualquier momento ?>
-                <button
-                    class="boton-reiniciar"
-                    onclick="location.href='index.php?restart=true'"
-                    type=button
-                >
-                    Reiniciar juego
-                </button>
+                <form action="index.php" method="post">
+                    <input type="hidden" name="restart" value="true">
+                    <button type="submit" class="boton-reiniciar">
+                        Reiniciar juego!
+                    </button>
+                </form>
             </div>
         </div>
     </div>
