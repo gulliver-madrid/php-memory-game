@@ -32,4 +32,8 @@
                 echo "Partida registrada con el ID: " . $id_partida;
             }
         }
+
+        public function getImagePath(string $imageName): string {
+            return "images/" . $imageName;
+        }
     }

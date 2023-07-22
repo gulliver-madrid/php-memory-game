@@ -16,6 +16,7 @@
         session_start();
     }
 
+
     // Verificar si se debe reiniciar el juego
     if (isset($_GET['restart']) || !isset($_SESSION['app']) || $_SESSION['app'] == null){
         assert(isset($_GET['jugadores']));
@@ -24,12 +25,16 @@
             ? $_SESSION['num_tarjetas']
             : NUMBER_OF_CARDS;
         $juego = startGame($num_jugadores, $num_tarjetas);
+
         $app = new App($juego);
         $_SESSION['app'] = $app;
     } else {
         $app = $_SESSION['app'];
-        $juego = $app->juego;
     }
+
+    assert($app instanceof App, 'App must be an instance of App');
+    $juego = $app->juego;
+
 
     // Obtener la carta seleccionada
     if (isset($_GET['carta'])) {
@@ -66,11 +71,11 @@
     }
 
     // Crea una tarjeta en el tablero
-    function displaySquare(Juego $juego, int $i): void {
+    function displaySquare(App $app, int $i): void {
+        $juego = $app->juego;
         $cartas = $juego->cartas;
-        $valor_carta = $cartas[$i];
-        $src = "images/" . $valor_carta;
-
+        $imageName = $cartas[$i];
+        $src = $app->getImagePath($imageName);
         switch (getDisplayValue($juego, $i)) {
             case DisplayValue::Descubierta:
                 echo "<div class=\"carta descubierta\">" . displayCardImage($src) . "</div>";
@@ -90,13 +95,14 @@
         }
     }
 
-    function displayBoard(Juego $juego): void {
+    function displayBoard(App $app): void {
+        $juego = $app->juego;
     ?>
         <div class="board">
             <?php
                 $cartas = $juego->cartas;
                 for ($i = 0; $i < count($cartas); $i++):
-                    displaySquare($juego, $i);
+                    displaySquare($app, $i);
                 endfor;
             ?>
         </div>
@@ -193,7 +199,7 @@
     <div class='hbox'>
         <div>
             <?php
-                displayBoard($juego)
+                displayBoard($app)
             ?>
         </div>
 
