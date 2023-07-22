@@ -1,4 +1,5 @@
 <?php
+    require_once "defaults.php";
     require_once "helpers.php";
     require_once 'views/indexView.php';
 
@@ -22,21 +23,18 @@
             FILTER_VALIDATE_INT,
             ['options' => ['min_range' => 2, 'max_range' => 8]]
         );
-
-        if ($num_tarjetas_solicitado !== false) {
-            // El numero de tarjetas es valido (esta entre 2 y 8)
-            $_SESSION['num_tarjetas'] = $num_tarjetas_solicitado;
-        } else {
-            // El numero de tarjetas no es valido
-            echo "El número de tarjetas debe estar entre 2 y 8. Por favor, vuelve a intentarlo.";
-        }
+        $_SESSION['num_tarjetas'] = ($num_tarjetas_solicitado == false)
+            ? NUMBER_OF_CARDS
+            : $num_tarjetas_solicitado;
     }
     if (!isset($_SESSION['num_tarjetas'])){
-        $_SESSION['num_tarjetas'] = 4;
+        $_SESSION['num_tarjetas'] = NUMBER_OF_CARDS;
     }
     $num_tarjetas = $_SESSION['num_tarjetas'];
     $tema = $_SESSION['tema'];
+    assert(is_string($tema));
     assert(in_array($tema, ['claro', 'oscuro']));
+    assert(is_int($num_tarjetas));
 
     indexView($num_tarjetas, $tema);
 ?>

@@ -1,6 +1,7 @@
 <?php
 
     require_once "app.php";
+    require_once "defaults.php";
     require_once "fileManager.php";
 
     use JuegoMemoria\App\App;
@@ -9,13 +10,11 @@
     use function JuegoMemoria\Juego\getDisplayValue;
 
     $debug = false;
-    const NUMBER_OF_CARDS = 4;
 
     // Iniciar la sesion
     if (!isset($_SESSION)) {
         session_start();
     }
-
 
     // Verificar si se debe reiniciar el juego
     if (isset($_GET['restart']) || !isset($_SESSION['app']) || $_SESSION['app'] == null){
