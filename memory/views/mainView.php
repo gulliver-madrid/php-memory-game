@@ -104,17 +104,14 @@
     // Muestra informacion sobre el juego
     function displayInfo(App $app): void {
         $juego = $app->juego;
-    ?>
+        $etiquetas_jugador_y_turno = getEtiquetasJugadorYTurnoPresenter($juego);
+        $aciertos = $juego->aciertos;
+        ?>
         <div>
-            <?php if ($juego->num_jugadores == 2): ?>
-                <p>Jugador actual: <?= $juego->jugador_actual + 1 ?></p>
-                <p>Turno: <?= $juego->turno ?></p>
-            <?php else: ?>
-                <p>Intento: <?= $juego->turno ?></p>
-            <?php endif; ?>
-
-            <?php $aciertos = $juego->aciertos; ?>
-            <?php if ($juego->num_jugadores == 1): ?>
+            <?php foreach ($etiquetas_jugador_y_turno as $etiqueta) {
+                echo '<p>'. $etiqueta . '</p>';
+            }
+            if ($juego->num_jugadores == 1): ?>
                 <p>Aciertos: <?= $aciertos[0] ?></p>
             <?php else:
                 displayScores($juego, $aciertos);
@@ -125,11 +122,11 @@
                     ? "Cambiar jugador"
                     : "Ocultar cartas";
                 ?>
-                <p>
+                <div>
                     <button onclick="location.href='?ocultar=true'">
                         <?= $button_text ?>
                     </button>
-                </p>
+                </div>
             <?php endif; ?>
 
             <?php displayEndGame($app); ?>

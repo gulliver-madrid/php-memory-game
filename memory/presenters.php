@@ -27,3 +27,15 @@
         }
         return $presenters;
     }
+
+    /**
+     * @return array<string>
+     */
+    function getEtiquetasJugadorYTurnoPresenter(Juego $juego): array {
+        return ($juego->num_jugadores == 2)
+            ?[
+                "Jugador actual: " . ($juego->jugador_actual + 1),
+                "Turno: " . $juego->turno
+            ]
+            :["Intento: " . $juego->turno];
+    }
