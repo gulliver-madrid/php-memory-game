@@ -4,6 +4,7 @@ require_once 'memory/presenters.php';
 
 use PHPUnit\Framework\TestCase;
 use JuegoMemoria\Juego\Juego;
+use JuegoMemoria\Presenters\JugadorScorePresenter;
 
 class JugadorScorePresenterTest extends TestCase {
 

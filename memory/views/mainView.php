@@ -6,6 +6,11 @@
     use JuegoMemoria\Juego\Juego;
     use JuegoMemoria\Juego\DisplayValue;
     use function JuegoMemoria\Juego\getDisplayValue;
+    use JuegoMemoria\Presenters\JugadorScorePresenter;
+    use JuegoMemoria\Presenters\ScoresOnePlayerPresenter;
+    use JuegoMemoria\Presenters\ScoresTwoPlayersPresenter;
+    use function JuegoMemoria\Presenters\crearScorePresenters;
+    use function JuegoMemoria\Presenters\getEtiquetasJugadorYTurnoPresenter;
 
 
     function displayCardImage(string $src): string {
