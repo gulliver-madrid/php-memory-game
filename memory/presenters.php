@@ -42,21 +42,21 @@
     }
 
     function crearScorePresenters(Juego $juego): ScoresOnePlayerPresenter | ScoresTwoPlayersPresenter {
-        if ($juego->num_jugadores == 1) {
-            return new ScoresOnePlayerPresenter("Aciertos: " . $juego->aciertos[0]);
-        } else {
-            return new ScoresTwoPlayersPresenter(crearJugadorScorePresenters($juego, $juego->aciertos));
-        }
+        $aciertos = $juego->aciertos;
+        return ($juego->num_jugadores == 1)
+            ? new ScoresOnePlayerPresenter("Aciertos: " . $aciertos[0])
+            : new ScoresTwoPlayersPresenter(crearJugadorScorePresenters($juego, $aciertos));
     }
 
     /**
      * @return array<string>
      */
     function getEtiquetasJugadorYTurnoPresenter(Juego $juego): array {
+        $turno = $juego->turno;
         return ($juego->num_jugadores == 2)
             ?[
                 "Jugador actual: " . ($juego->jugador_actual + 1),
-                "Turno: " . $juego->turno
+                "Turno: " . $turno
             ]
-            :["Intento: " . $juego->turno];
+            :["Intento: " . $turno];
     }
