@@ -87,11 +87,8 @@
         <?php
     }
 
-    /**
-     * @param array<int> $aciertos
-     */
-    function displayScores(Juego $juego, array $aciertos): void {
-        $presenters = crearJugadorScorePresenters($juego, $aciertos)
+    function displayScores(ScoresTwoPlayersPresenter $scores_presenter): void {
+        $presenters = $scores_presenter->presenters;
     ?>
         <div class="hbox">
             <?php foreach ($presenters as $presenter) :
@@ -106,18 +103,20 @@
         $juego = $app->juego;
         $etiquetas_jugador_y_turno = getEtiquetasJugadorYTurnoPresenter($juego);
         $aciertos = $juego->aciertos;
+        $scores_presenter = crearScorePresenters($juego);
         ?>
         <div>
-            <?php foreach ($etiquetas_jugador_y_turno as $etiqueta) {
+            <?php
+            foreach ($etiquetas_jugador_y_turno as $etiqueta) {
                 echo '<p>'. $etiqueta . '</p>';
             }
-            if ($juego->num_jugadores == 1): ?>
-                <p>Aciertos: <?= $aciertos[0] ?></p>
-            <?php else:
-                displayScores($juego, $aciertos);
-            endif; ?>
+            if ($scores_presenter instanceof ScoresOnePlayerPresenter):
+                echo '<p>'. $scores_presenter->text . '</p>';
+            else:
+                displayScores($scores_presenter);
+            endif;
 
-            <?php if ($juego->intentoRealizado()):
+            if ($juego->intentoRealizado()):
                 $button_text = ($juego->num_jugadores == 2)
                     ? "Cambiar jugador"
                     : "Ocultar cartas";

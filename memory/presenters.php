@@ -28,6 +28,26 @@
         return $presenters;
     }
 
+    class ScoresTwoPlayersPresenter {
+        /** @param array<JugadorScorePresenter> $presenters */
+        public function __construct(
+            public array $presenters
+        ) {}
+    }
+    class ScoresOnePlayerPresenter {
+        public function __construct(
+            public string $text
+        ) {}
+    }
+
+    function crearScorePresenters(Juego $juego): ScoresOnePlayerPresenter | ScoresTwoPlayersPresenter {
+        if ($juego->num_jugadores == 1) {
+            return new ScoresOnePlayerPresenter("Aciertos: " . $juego->aciertos[0]);
+        } else {
+            return new ScoresTwoPlayersPresenter(crearJugadorScorePresenters($juego, $juego->aciertos));
+        }
+    }
+
     /**
      * @return array<string>
      */
