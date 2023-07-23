@@ -15,3 +15,15 @@
             $this->aciertos_jugador = $aciertos[$indice_jugador];
         }
     }
+
+    /**
+     * @param array<int> $aciertos
+     * @return array<JugadorScorePresenter>
+     */
+    function crearJugadorScorePresenters(Juego $juego, array $aciertos): array{
+        $presenters = [];
+        foreach([0, 1] as $indice_jugador){
+            $presenters[] = new JugadorScorePresenter($indice_jugador, $juego, $aciertos);
+        }
+        return $presenters;
+    }

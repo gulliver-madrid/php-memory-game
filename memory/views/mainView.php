@@ -78,22 +78,25 @@
         <?php
     }
 
+    function displayJugadorScore(JugadorScorePresenter $presenter): void {
+        ?>
+            <div class="aciertos <?php if ($presenter->is_selected) echo "selected"; ?>">
+                <p><?= $presenter->nombre_jugador ?></p>
+                <p class="aciertos-num"><?= $presenter->aciertos_jugador ?></p>
+            </div>
+        <?php
+    }
+
     /**
      * @param array<int> $aciertos
      */
     function displayScores(Juego $juego, array $aciertos): void {
-        $presenters = [];
-        foreach([0, 1] as $indice_jugador){
-            $presenters[] = new JugadorScorePresenter($indice_jugador, $juego, $aciertos);
-        }
+        $presenters = crearJugadorScorePresenters($juego, $aciertos)
     ?>
         <div class="hbox">
-            <?php foreach ($presenters as $presenter) : ?>
-                <div class="aciertos <?php if ($presenter->is_selected) echo "selected"; ?>">
-                    <p><?= $presenter->nombre_jugador ?></p>
-                    <p class="aciertos-num"><?= $presenter->aciertos_jugador ?></p>
-                </div>
-            <?php endforeach; ?>
+            <?php foreach ($presenters as $presenter) :
+                displayJugadorScore($presenter);
+            endforeach; ?>
         </div>
     <?php
     }
