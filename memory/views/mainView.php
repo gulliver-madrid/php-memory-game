@@ -1,5 +1,6 @@
 <?php
     require_once "app.php";
+    require_once "presenters.php";
 
     use JuegoMemoria\App\App;
     use JuegoMemoria\Juego\Juego;
@@ -81,12 +82,16 @@
      * @param array<int> $aciertos
      */
     function displayScores(Juego $juego, array $aciertos): void {
+        $presenters = [];
+        foreach([0, 1] as $indice_jugador){
+            $presenters[] = new JugadorScorePresenter($indice_jugador, $juego, $aciertos);
+        }
     ?>
         <div class="hbox">
-            <?php foreach ([0, 1] as $indice_jugador) : ?>
-                <div class="aciertos <?php if ($juego->jugador_actual == $indice_jugador) echo "selected"; ?>">
-                    <p>Jugador <?php echo $indice_jugador + 1; ?></p>
-                    <p class="aciertos-num"><?= $aciertos[$indice_jugador] ?></p>
+            <?php foreach ($presenters as $presenter) : ?>
+                <div class="aciertos <?php if ($presenter->is_selected) echo "selected"; ?>">
+                    <p><?= $presenter->nombre_jugador ?></p>
+                    <p class="aciertos-num"><?= $presenter->aciertos_jugador ?></p>
                 </div>
             <?php endforeach; ?>
         </div>
