@@ -2,15 +2,12 @@
 
     require_once "app.php";
     require_once "defaults.php";
-    require_once "fileManager.php";
     require_once "views/mainView.php";
 
     use JuegoMemoria\App\App;
     use JuegoMemoria\Juego\Juego;
 
-
-
-    $debug = false;
+    $debug = true;
 
     // Iniciar la sesion
     if (!isset($_SESSION)) {
@@ -24,9 +21,7 @@
         $num_tarjetas = isset($_SESSION['num_tarjetas'])
             ? $_SESSION['num_tarjetas']
             : NUMBER_OF_CARDS;
-        $juego = startGame($num_jugadores, $num_tarjetas);
-
-        $app = new App($juego);
+        $app = startGame($num_jugadores, $num_tarjetas);
         $_SESSION['app'] = $app;
     } else {
         $app = $_SESSION['app'];
@@ -49,15 +44,10 @@
         debug_output($juego);
     }
 
-    function startGame(int $num_jugadores, int $num_tarjetas=NUMBER_OF_CARDS): Juego {
+    function startGame(int $num_jugadores, int $num_tarjetas=NUMBER_OF_CARDS): App {
         assert($num_jugadores == 1 || $num_jugadores == 2);
-        $image_files = obtenerArchivos("images");
-        if ($image_files == false){
-            $image_files = []; // TODO: generar error
-        }
-        $image_files = array_slice($image_files, 0, $num_tarjetas);
-        $juego = new Juego($image_files, $num_jugadores);
-        return $juego;
+        $app = new App($num_jugadores, $num_tarjetas);
+        return $app;
     }
 
     function debug_output(Juego $juego): void {

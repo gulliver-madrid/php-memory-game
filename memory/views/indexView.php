@@ -40,9 +40,9 @@
                     </form>
                 </div>
                 <hr>
-                <h2>Seleccionar número de tarjetas</h2>
+                <h2>Seleccionar número de parejas</h2>
                 <form method="post">
-                    <label for="num_tarjetas">Número de tarjetas (entre 2 y 8):</label>
+                    <label for="num_tarjetas">Número de parejas (entre 2 y 8):</label>
                     <input type="number" name="num_tarjetas" id="num_tarjetas" min="2" max="8" value="<?= $num_tarjetas ?>" required>
                     <input type="submit" value="Aplicar">
                 </form>

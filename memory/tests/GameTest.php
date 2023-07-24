@@ -1,23 +1,24 @@
 <?php
     require_once "memory/game.php";
+
     use PHPUnit\Framework\TestCase;
     use JuegoMemoria\Juego\Juego;
 
-    /** @return array<string> */
-    function crearValoresCartasEjemplo(): array {
-        return ['a', 'b', 'c'];
+    /** @return array<int> */
+    function crearIdCartasEjemplo(): array {
+        return [1, 2, 3];
     }
 
-    /** @return array<string> */
-    function crearValoresCartasColocadasEjemplo(): array {
-        return array_merge(crearValoresCartasEjemplo(), crearValoresCartasEjemplo());
+    /** @return array<int> */
+    function crearIdsCartasColocadasEjemplo(): array {
+        return array_merge(crearIdCartasEjemplo(), crearIdCartasEjemplo());
     }
 
     class GameTest extends TestCase
     {
         public function testNewGameOnePlayer(): void
         {
-            $juego = new Juego(crearValoresCartasEjemplo(), 1);
+            $juego = new Juego(crearIdCartasEjemplo(), 1);
             $this->assertJuegoBienInicializado($juego);
             $this->assertEquals(1, count($juego->aciertos));
             $this->assertEquals(6, count($juego->cartas));
@@ -25,27 +26,27 @@
 
         public function testNewGameTwoPlayers(): void
         {
-            $juego = new Juego(crearValoresCartasEjemplo(), 2);
+            $juego = new Juego(crearIdCartasEjemplo(), 2);
             $this->assertJuegoBienInicializado($juego);
             $this->assertEquals(2, count($juego->aciertos));
         }
 
         public function testRegistrarCarta(): void {
-            $juego = new Juego(crearValoresCartasEjemplo(), 1);
+            $juego = new Juego(crearIdCartasEjemplo(), 1);
             $juego->registrarCarta(0);
             $this->assertEquals(1, count($juego->intento_actual));
         }
 
         public function testRegistrarCartaDosVecesNoCambiaNada(): void {
-            $juego = new Juego(crearValoresCartasEjemplo(), 1);
+            $juego = new Juego(crearIdCartasEjemplo(), 1);
             $juego->registrarCarta(0);
             $juego->registrarCarta(0);
             $this->assertEquals(1, count($juego->intento_actual));
         }
 
         public function testNoEncuentraUnaPareja(): void {
-            $juego = new Juego(crearValoresCartasEjemplo(), 1);
-            $juego->cartas = crearValoresCartasColocadasEjemplo();
+            $juego = new Juego(crearIdCartasEjemplo(), 1);
+            $juego->cartas = crearIdsCartasColocadasEjemplo();
             $juego->registrarCarta(0);
             $juego->registrarCarta(1);
             // El intento actual tiene dos cartas
@@ -57,8 +58,8 @@
         }
 
         public function testEncuentraUnaPareja(): void {
-            $juego = new Juego(crearValoresCartasEjemplo(), 1);
-            $juego->cartas = crearValoresCartasColocadasEjemplo();
+            $juego = new Juego(crearIdCartasEjemplo(), 1);
+            $juego->cartas = crearIdsCartasColocadasEjemplo();
             $juego->registrarCarta(0);
             $juego->registrarCarta(3);
             // El intento actual se pone a 0
@@ -70,8 +71,8 @@
         }
 
         public function testEncuentraUnaParejaJugador2(): void {
-            $juego = new Juego(crearValoresCartasEjemplo(), 2);
-            $juego->cartas = crearValoresCartasColocadasEjemplo();
+            $juego = new Juego(crearIdCartasEjemplo(), 2);
+            $juego->cartas = crearIdsCartasColocadasEjemplo();
             // El jugador 1 falla
             $juego->registrarCarta(0);
             $juego->registrarCarta(1);

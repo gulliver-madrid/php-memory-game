@@ -4,7 +4,7 @@
     class Juego {
         /** @var array<int> */
         public array $aciertos;
-        /** @var array<string> */
+        /** @var array<int> */
         public array $cartas;
         /** @var array<int> */
         public array $encontradas;
@@ -17,7 +17,7 @@
         public int $turno;
 
         /**
-         * @param array<string> $cartas_unicas
+         * @param array<int> $cartas_unicas
          */
         public function __construct(array $cartas_unicas, int $num_jugadores) {
             // Cartas del juego
