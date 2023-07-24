@@ -1,7 +1,7 @@
 <?php
     const MAIN_VIEW_PATH = "main.php";
 
-    function indexView(int $num_tarjetas, string $tema): void {
+    function indexView(int $num_tarjetas, string $tema, int $num_max_imagenes): void {
         ?>
         <!DOCTYPE html>
         <html>
@@ -42,8 +42,8 @@
                 <hr>
                 <h2>Seleccionar número de parejas</h2>
                 <form method="post">
-                    <label for="num_tarjetas">Número de parejas (entre 2 y 8):</label>
-                    <input type="number" name="num_tarjetas" id="num_tarjetas" min="2" max="8" value="<?= $num_tarjetas ?>" required>
+                    <label for="num_tarjetas">Número de parejas (entre 2 y <?= $num_max_imagenes ?>):</label>
+                    <input type="number" name="num_tarjetas" id="num_tarjetas" min="2" max="<?= $num_max_imagenes ?>" value="<?= $num_tarjetas ?>" required>
                     <input type="submit" value="Aplicar">
                 </form>
             </body>

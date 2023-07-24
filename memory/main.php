@@ -2,12 +2,13 @@
 
     require_once "app.php";
     require_once "defaults.php";
+    require_once "helpers.php";
     require_once "views/mainView.php";
 
     use JuegoMemoria\App\App;
     use JuegoMemoria\Juego\Juego;
 
-    $debug = true;
+    $debug = false;
 
     // Iniciar la sesion
     if (!isset($_SESSION)) {

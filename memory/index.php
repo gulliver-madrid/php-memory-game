@@ -1,9 +1,17 @@
 <?php
     require_once "defaults.php";
+    require_once "fileManager.php";
     require_once "helpers.php";
     require_once 'views/indexView.php';
 
     session_start();
+
+    $archivos = obtenerArchivos('images');
+    if ($archivos == false) {
+        echo "No se encontró ningún archivo en el directorio images<br>";
+        die();
+    }
+    $num_max_imagenes = count($archivos);
 
     if (isset($_POST['restart'])){
         $_SESSION['app'] = null;
@@ -21,7 +29,7 @@
             INPUT_POST,
             'num_tarjetas',
             FILTER_VALIDATE_INT,
-            ['options' => ['min_range' => 2, 'max_range' => 8]]
+            ['options' => ['min_range' => 2, 'max_range' => $num_max_imagenes]]
         );
         $_SESSION['num_tarjetas'] = ($num_tarjetas_solicitado == false)
             ? NUMBER_OF_CARDS
@@ -36,5 +44,5 @@
     assert(in_array($tema, ['claro', 'oscuro']));
     assert(is_int($num_tarjetas));
 
-    indexView($num_tarjetas, $tema);
+    indexView($num_tarjetas, $tema, $num_max_imagenes);
 ?>
