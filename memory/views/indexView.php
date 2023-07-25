@@ -22,7 +22,9 @@
                         <a href=<?php echo MAIN_VIEW_PATH . '?restart=true&jugadores=2'; ?> class="start-button">Dos jugadores</a>
                     </div>
                 </div>
-                <div class="container">
+                <hr>
+                <h2>Ajustes</h2>
+                <div>
                     <form method="post">
                         <label>
                             <input type="radio" name="tema" value="claro"
@@ -36,16 +38,13 @@
                         </label>
                         <br/>
                         <br/>
-                        <input type="submit" value="Aplicar">
+                        <label for="num_tarjetas">Número de parejas (entre 2 y <?= $num_max_imagenes ?>):</label>
+                        <input type="number" name="num_tarjetas" id="num_tarjetas" min="2" max="<?= $num_max_imagenes ?>" value="<?= $num_tarjetas ?>" required>
+                        <br/>
+                        <br/>
+                        <input type="submit" value="Aplicar cambios">
                     </form>
                 </div>
-                <hr>
-                <h2>Seleccionar número de parejas</h2>
-                <form method="post">
-                    <label for="num_tarjetas">Número de parejas (entre 2 y <?= $num_max_imagenes ?>):</label>
-                    <input type="number" name="num_tarjetas" id="num_tarjetas" min="2" max="<?= $num_max_imagenes ?>" value="<?= $num_tarjetas ?>" required>
-                    <input type="submit" value="Aplicar">
-                </form>
             </body>
         </html>
     <?php
