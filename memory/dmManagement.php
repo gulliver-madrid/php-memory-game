@@ -4,13 +4,21 @@
     use PDO;
     use PDOException;
 
-    define('QUERY_TABLE_CREATION', "CREATE TABLE IF NOT EXISTS Partidas (
+    const QUERY_TABLE_CREATION = "CREATE TABLE IF NOT EXISTS Partidas (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         inicio TIMESTAMP NOT NULL,
         fin TIMESTAMP NOT NULL,
-        numero_jugadores INTEGER NOT NULL)");
+        numero_jugadores INTEGER NOT NULL)";
 
     class DbManager {
+
+        public function registrar_partida(string $inicio, string $fin, int $num_jugadores): string | false {
+            $db = $this->get_db_connection_with_table_partidas();
+            if ($db === false) {
+                return false;
+            }
+            return $this->registrar_partida_en_db($db, $inicio, $fin, $num_jugadores);
+        }
 
         private function get_db_connection_with_table_partidas(): PDO | false{
             try {
@@ -30,12 +38,7 @@
             }
         }
 
-        public function registrar_partida(string $inicio, string $fin, int $num_jugadores): string | false {
-            $db = $this->get_db_connection_with_table_partidas();
-            if ($db === false) {
-                return false;
-            }
-
+        private function registrar_partida_en_db(PDO $db, string $inicio, string $fin, int $num_jugadores): string | false{
             try {
                 // Prepara la consulta SQL
                 $stmt = $db->prepare("INSERT INTO Partidas (inicio, fin, numero_jugadores) VALUES (:inicio, :fin, :num_jugadores)");
